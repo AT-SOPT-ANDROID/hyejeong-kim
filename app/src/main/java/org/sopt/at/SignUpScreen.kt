@@ -21,7 +21,7 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
             onNext = { currentStep = 2 },
         )
 
-        else -> PwInputScreen()
+        else -> PwInputScreen(pw, { pw = it })
     }
 
 }
