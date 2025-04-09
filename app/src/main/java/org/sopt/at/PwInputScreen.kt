@@ -1,5 +1,6 @@
 package org.sopt.at
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,12 +20,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun PwInputScreen(pw: String, onPwChange: (String) -> Unit, modifier: Modifier = Modifier) {
     var showPassword by remember { mutableStateOf(value = false) }
+
+    // pw 유효성 검사: 영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15자리
+    val isValidPw = pw.matches(Regex("^[a-zA-z0-9~!@#$%^&*]{8,15}$"))
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,6 +65,13 @@ fun PwInputScreen(pw: String, onPwChange: (String) -> Unit, modifier: Modifier =
 
         Button(
             onClick = {
+                // pw가 유효할 경우 로그인 뷰로 이동
+                if (isValidPw) {
+                    val intent = Intent(context, SignInActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    context.startActivity(intent)
+                }
 
             },
             modifier = Modifier.fillMaxWidth(),
