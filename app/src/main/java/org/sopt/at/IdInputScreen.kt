@@ -35,6 +35,7 @@ fun IdInputScreen(
     // id 유효성 검사: 영문 소문자 또는 영문 소문자, 숫자 조합 6~12자리
     val isValidId = id.matches(Regex("^[a-z0-9]{6,12}$"))
 
+    // 스낵바
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -83,6 +84,7 @@ fun IdInputScreen(
                     if (isValidId) {
                         onNext()
                     } else {
+                        // id가 유효 하지 않을 시 스낵바
                         scope.launch {
                             snackbarHostState.showSnackbar("ID가 유효하지 않습니다.")
                         }
