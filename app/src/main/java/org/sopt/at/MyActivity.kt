@@ -31,9 +31,12 @@ class MyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val profileId = intent.getStringExtra("Profile") ?: ""
+
         setContent {
             ATSOPTANDROIDTheme {
-                MyUi()
+                MyUi(profileId)
             }
         }
     }
@@ -41,7 +44,7 @@ class MyActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun MyUi(modifier: Modifier = Modifier) {
+fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     Column(
@@ -53,7 +56,7 @@ fun MyUi(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            "user",
+            text = profileId,
             color = Color.White,
             fontSize = 40.sp,
             modifier = Modifier.padding(top = 30.dp)

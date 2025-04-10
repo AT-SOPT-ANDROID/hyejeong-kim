@@ -144,6 +144,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                     } else {
                         // 회원가입 정보 일치 시 MyActivity로 이동
                         val intent = Intent(context, MyActivity::class.java).apply {
+                            putExtra("Profile", id)
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         }
                         context.startActivity(intent)
