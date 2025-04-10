@@ -1,8 +1,9 @@
 package org.sopt.at.signup
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -121,31 +120,33 @@ fun PwInputScreen(
                 }
 
                 // 다음 버튼
-                Button(
-                    onClick = {
-                        // pw가 유효할 경우 로그인 뷰로 이동
-                        if (isValidPw) {
-                            onNext()
-                        } else {
-                            // pw가 유효하지 않을 경우 스낵바
-                            scope.launch {
-                                snackbarHostState.showSnackbar("비밀번호가 유효하지 않습니다.")
-                            }
-                        }
-                    },
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(50.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    border = BorderStroke(1.dp, Color.Gray),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.LightGray
-                    ),
+                        .size(50.dp)
+                        .background(Color.Black, RoundedCornerShape(10.dp))
+                        .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
+                        .clickable(
+                            // 리플 효과 제거
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            // pw가 유효할 경우 로그인 뷰로 이동
+                            if (isValidPw) {
+                                onNext()
+                            } else {
+                                // pw가 유효하지 않을 경우 스낵바
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("비밀번호가 유효하지 않습니다.")
+                                }
+                            }
+                        },
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
                         "다음",
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        color = Color.LightGray
                     )
                 }
 

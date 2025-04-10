@@ -7,7 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,8 +22,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -36,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -149,35 +150,38 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
             )
 
             // 로그인하기 버튼
-            Button(
-                onClick = {
-                    if (id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()) {
-                        // 회원 정보가 유효 하지 않을 시 스낵바
-                        scope.launch {
-                            snackbarHostState.showSnackbar("회원 정보가 유효하지 않습니다.")
-                        }
-                    } else {
-                        // 회원가입 정보 일치 시 MyActivity로 이동
-                        val intent = Intent(context, MyActivity::class.java).apply {
-                            putExtra("Profile", id)
-                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        }
-                        context.startActivity(intent)
-                    }
-                },
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp)
-                    .height(45.dp),
-                shape = RoundedCornerShape(5.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF404040),
-                    contentColor = Color.Gray
-                ),
+                    .height(45.dp)
+                    .background(Color(0xFF404040), RoundedCornerShape(5.dp))
+                    .clickable(
+                        // 리플 효과 제거
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
+                        if (id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()) {
+                            // 회원 정보가 유효 하지 않을 시 스낵바
+                            scope.launch {
+                                snackbarHostState.showSnackbar("회원 정보가 유효하지 않습니다.")
+                            }
+                        } else {
+                            // 회원가입 정보 일치 시 MyActivity로 이동
+                            val intent = Intent(context, MyActivity::class.java).apply {
+                                putExtra("Profile", id)
+                                flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            context.startActivity(intent)
+                        }
+                    },
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     "로그인하기",
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
                 )
             }
 
