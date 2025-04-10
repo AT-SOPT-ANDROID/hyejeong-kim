@@ -120,7 +120,8 @@ fun IdInputScreen(
                             ),
                             textStyle = TextStyle(
                                 color = Color.White
-                            )
+                            ),
+                            singleLine = true
                         )
 
                         Text(

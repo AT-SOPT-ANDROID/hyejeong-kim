@@ -2,7 +2,6 @@ package org.sopt.at
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -119,7 +118,8 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 ),
                 textStyle = TextStyle(
                     color = Color.White
-                )
+                ),
+                singleLine = true
             )
 
             // 비밀번호 입력 창
@@ -247,6 +247,7 @@ fun PasswordTextField(
         ),
         textStyle = TextStyle(
             color = Color.White
-        )
+        ),
+        singleLine = true
     )
 }
