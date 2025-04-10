@@ -47,8 +47,7 @@ fun PwInputScreen(
     var showPassword by remember { mutableStateOf(value = false) }
 
     // pw 유효성 검사: 영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15자리
-    val isValidPw = pw.matches(Regex("^[a-zA-z0-9~!@#$%^&*]{8,15}$"))
-    val context = LocalContext.current
+    val isValidPw = pw.matches(Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#\$%^&*])[a-zA-Z0-9~!@#\$%^&*]{8,15}$"))
 
     // 스낵바
     val scope = rememberCoroutineScope()

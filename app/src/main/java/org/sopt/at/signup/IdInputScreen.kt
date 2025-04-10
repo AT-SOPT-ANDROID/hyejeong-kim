@@ -43,7 +43,7 @@ fun IdInputScreen(
     modifier: Modifier = Modifier
 ) {
     // id 유효성 검사: 영문 소문자 또는 영문 소문자, 숫자 조합 6~12자리
-    val isValidId = id.matches(Regex("^[a-z0-9]{6,12}$"))
+    val isValidId = id.matches(Regex("^(?=.*[a-z])[a-z0-9]{6,12}$"))
 
     // 스낵바
     val scope = rememberCoroutineScope()
