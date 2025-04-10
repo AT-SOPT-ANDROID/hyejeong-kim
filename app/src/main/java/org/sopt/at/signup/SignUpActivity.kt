@@ -1,10 +1,13 @@
 package org.sopt.at.signup
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +52,16 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
             }
         )
 
-        else -> PwInputScreen(pw, { pw = it }, onBack = { currentStep = 1 })
+        else -> PwInputScreen(pw, { pw = it }, onNext = {
+            // 다음 버튼 클릭 시 로그인 뷰로 이동
+            val intent = Intent(context, SignInActivity::class.java).apply {
+                putExtra("ID", id)
+                putExtra("PW", pw)
+                flags =
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(intent)
+        }, onBack = { currentStep = 1 })
     }
 
 }

@@ -1,6 +1,5 @@
 package org.sopt.at.signup
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,12 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.at.PasswordTextField
-import org.sopt.at.SignInActivity
 
 @Composable
 fun PwInputScreen(
     pw: String,
     onPwChange: (String) -> Unit,
+    onNext: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -126,11 +125,7 @@ fun PwInputScreen(
                     onClick = {
                         // pw가 유효할 경우 로그인 뷰로 이동
                         if (isValidPw) {
-                            val intent = Intent(context, SignInActivity::class.java).apply {
-                                flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
-                            context.startActivity(intent)
+                            onNext()
                         } else {
                             // pw가 유효하지 않을 경우 스낵바
                             scope.launch {

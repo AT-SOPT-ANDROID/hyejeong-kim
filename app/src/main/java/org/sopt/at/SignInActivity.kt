@@ -1,7 +1,9 @@
 package org.sopt.at
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -49,9 +51,15 @@ class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val signUpId = intent.getStringExtra("ID")?:""
+        val signUpPw = intent.getStringExtra("PW")?:""
+
+        Log.d("회원가입", signUpId)
+
         setContent {
             ATSOPTANDROIDTheme {
-                LoginUi()
+                LoginUi(signUpId, signUpPw)
             }
         }
     }
@@ -59,7 +67,7 @@ class SignInActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginUi(modifier: Modifier = Modifier) {
+fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = Modifier) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
@@ -110,7 +118,9 @@ fun LoginUi(modifier: Modifier = Modifier) {
 
         Button(
             onClick = {
-
+                if (id == signUpId && password == signUpPw) {
+                    // 어쩌구
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
