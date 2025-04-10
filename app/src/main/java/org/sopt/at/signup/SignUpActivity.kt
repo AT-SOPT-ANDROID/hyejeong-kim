@@ -1,4 +1,4 @@
-package org.sopt.at
+package org.sopt.at.signup
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import org.sopt.at.SignInActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
 class SignUpActivity : ComponentActivity() {

@@ -1,6 +1,5 @@
-package org.sopt.at
+package org.sopt.at.signup
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,32 +21,29 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
 @Composable
-fun PwInputScreen(
-    pw: String,
-    onPwChange: (String) -> Unit,
+fun IdInputScreen(
+    id: String,
+    onIdChange: (String) -> Unit,
+    onNext: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var showPassword by remember { mutableStateOf(value = false) }
-
-    // pw 유효성 검사: 영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15자리
-    val isValidPw = pw.matches(Regex("^[a-zA-z0-9~!@#$%^&*]{8,15}$"))
-    val context = LocalContext.current
+    // id 유효성 검사: 영문 소문자 또는 영문 소문자, 숫자 조합 6~12자리
+    val isValidId = id.matches(Regex("^[a-z0-9]{6,12}$"))
 
     // 스낵바
     val scope = rememberCoroutineScope()
@@ -63,9 +59,10 @@ fun PwInputScreen(
                 .fillMaxSize()
                 .background(color = Color.Black)
                 .padding(innerPadding)
-                .padding(15.dp)
+                .padding(15.dp),
         ) {
             // 뒤로 가기 버튼
+            // 클릭 시 로그인 뷰로 이동
             Box(
                 modifier = Modifier.size(24.dp)
             ) {
@@ -90,29 +87,44 @@ fun PwInputScreen(
                     .padding(top = 15.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // 비밀번호 입력
+                // id 입력
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "비밀번호를 입력해주세요.",
+                        text = "아이디를 입력해주세요.",
                         color = Color.White,
                         fontSize = 20.sp
                     )
 
                     Column {
-                        PasswordTextField(
-                            password = pw,
-                            onPasswordChange = onPwChange,
-                            showPassword = showPassword,
-                            onTogglePasswordVisibility = { showPassword = !showPassword },
-                            modifier = Modifier
+                        // 아이디 입력 창
+                        TextField(
+                            value = id,
+                            onValueChange = onIdChange,
+                            placeholder = { Text("아이디") },
+                            modifier = modifier
+                                .fillMaxWidth()
                                 .padding(top = 20.dp)
                                 .border(1.dp, Color.Gray, shape = RoundedCornerShape(5.dp)),
+                            shape = RoundedCornerShape(5.dp),
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = Color(0xFF262626),
+                                unfocusedContainerColor = Color(0xFF262626),
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent,
+                                cursorColor = Color.White,
+                                focusedPlaceholderColor = Color.Gray,
+                                unfocusedPlaceholderColor = Color.Gray
+                            ),
+                            textStyle = TextStyle(
+                                color = Color.White
+                            )
                         )
 
                         Text(
-                            text = "영문, 숫자, 특수문자(~!@#$%^) 조합 8~15자리",
+                            text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
                             color = Color.Gray,
                             fontSize = 12.sp
                         )
@@ -122,17 +134,13 @@ fun PwInputScreen(
                 // 다음 버튼
                 Button(
                     onClick = {
-                        // pw가 유효할 경우 로그인 뷰로 이동
-                        if (isValidPw) {
-                            val intent = Intent(context, SignInActivity::class.java).apply {
-                                flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
-                            context.startActivity(intent)
+                        // id가 유효할 경우 회원가입 비밀번호 뷰로 이동
+                        if (isValidId) {
+                            onNext()
                         } else {
-                            // pw가 유효하지 않을 경우 스낵바
+                            // id가 유효 하지 않을 시 스낵바
                             scope.launch {
-                                snackbarHostState.showSnackbar("비밀번호가 유효하지 않습니다.")
+                                snackbarHostState.showSnackbar("ID가 유효하지 않습니다.")
                             }
                         }
                     },
@@ -144,16 +152,14 @@ fun PwInputScreen(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Black,
                         contentColor = Color.LightGray
-                    ),
+                    )
                 ) {
                     Text(
                         "다음",
                         fontSize = 16.sp
                     )
                 }
-
             }
-
         }
     }
 }
