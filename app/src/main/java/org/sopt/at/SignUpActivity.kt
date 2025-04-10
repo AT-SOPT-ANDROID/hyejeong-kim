@@ -35,10 +35,10 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
     when (currentStep) {
         1 -> IdInputScreen(
             id, { id = it },
-            onNext = { currentStep = 2 },
+            onNext = { currentStep = 2 }
         )
 
-        else -> PwInputScreen(pw, { pw = it })
+        else -> PwInputScreen(pw, { pw = it }, onBack = { currentStep = 1 })
     }
 
 }

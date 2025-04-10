@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -204,6 +205,9 @@ fun PasswordTextField(
             cursorColor = Color.White,
             focusedPlaceholderColor = Color.Gray,
             unfocusedPlaceholderColor = Color.Gray
+        ),
+        textStyle = TextStyle(
+            color = Color.White
         )
     )
 }
