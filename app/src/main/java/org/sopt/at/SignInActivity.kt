@@ -1,6 +1,5 @@
 package org.sopt.at
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +24,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -32,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +47,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import org.sopt.at.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
@@ -52,10 +56,8 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val signUpId = intent.getStringExtra("ID")?:""
-        val signUpPw = intent.getStringExtra("PW")?:""
-
-        Log.d("회원가입", signUpId)
+        val signUpId = intent.getStringExtra("ID") ?: ""
+        val signUpPw = intent.getStringExtra("PW") ?: ""
 
         setContent {
             ATSOPTANDROIDTheme {
@@ -73,107 +75,133 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
     var showPassword by remember { mutableStateOf(value = false) }
     val context = LocalContext.current
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = Color.Black)
-            .padding(horizontal = 15.dp, vertical = 100.dp)
-    ) {
-        Text(
-            text = "TVING ID 로그인",
-            color = Color.White,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
+    // 스낵바
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-        TextField(
-            value = id,
-            onValueChange = { id = it },
-            placeholder = { Text("아이디") },
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }
+    ) { innerPadding ->
+        Column(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            shape = RoundedCornerShape(5.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color(0xFF262626),
-                unfocusedContainerColor = Color(0xFF262626),
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                cursorColor = Color.White,
-                focusedPlaceholderColor = Color.Gray,
-                unfocusedPlaceholderColor = Color.Gray
-            )
-        )
-
-        PasswordTextField(
-            password = password,
-            onPasswordChange = { password = it },
-            showPassword = showPassword,
-            onTogglePasswordVisibility = { showPassword = !showPassword },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
-        )
-
-        Button(
-            onClick = {
-                if (id == signUpId && password == signUpPw) {
-                    // 어쩌구
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp)
-                .height(45.dp),
-            shape = RoundedCornerShape(5.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF404040),
-                contentColor = Color.Gray
-            ),
+                .fillMaxSize()
+                .background(color = Color.Black)
+                .padding(innerPadding)
+                .padding(horizontal = 15.dp, vertical = 100.dp)
         ) {
             Text(
-                "로그인하기",
+                text = "TVING ID 로그인",
+                color = Color.White,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 30.dp)
-                .padding(top = 35.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Text(
-                text = "아이디 찾기",
-                color = Color.Gray
+            // id 입력 창
+            TextField(
+                value = id,
+                onValueChange = { id = it },
+                placeholder = { Text("아이디") },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                shape = RoundedCornerShape(5.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color(0xFF262626),
+                    unfocusedContainerColor = Color(0xFF262626),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    cursorColor = Color.White,
+                    focusedPlaceholderColor = Color.Gray,
+                    unfocusedPlaceholderColor = Color.Gray
+                ),
+                textStyle = TextStyle(
+                    color = Color.White
+                )
             )
-            Text(
-                text = "|",
-                color = Color.Gray
+
+            // 비밀번호 입력 창
+            PasswordTextField(
+                password = password,
+                onPasswordChange = { password = it },
+                showPassword = showPassword,
+                onTogglePasswordVisibility = { showPassword = !showPassword },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
             )
-            Text(
-                text = "비밀번호 찾기",
-                color = Color.Gray
-            )
-            Text(
-                text = "|",
-                color = Color.Gray
-            )
-            Text(
-                text = "회원가입",
-                color = Color.Gray,
-                modifier = Modifier.clickable {
-                    val intent = Intent(context, SignUpActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+            // 로그인하기 버튼
+            Button(
+                onClick = {
+                    if (id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()) {
+                        // 회원 정보가 유효 하지 않을 시 스낵바
+                        scope.launch {
+                            snackbarHostState.showSnackbar("회원 정보가 유효하지 않습니다.")
+                        }
+                    } else {
+                        // 회원가입 정보 일치 시 MyActivity로 이동
+                        val intent = Intent(context, MyActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        context.startActivity(intent)
                     }
-                    context.startActivity(intent)
-                }
-            )
-        }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp)
+                    .height(45.dp),
+                shape = RoundedCornerShape(5.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF404040),
+                    contentColor = Color.Gray
+                ),
+            ) {
+                Text(
+                    "로그인하기",
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
+                    .padding(top = 35.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text(
+                    text = "아이디 찾기",
+                    color = Color.Gray
+                )
+                Text(
+                    text = "|",
+                    color = Color.Gray
+                )
+                Text(
+                    text = "비밀번호 찾기",
+                    color = Color.Gray
+                )
+                Text(
+                    text = "|",
+                    color = Color.Gray
+                )
+                Text(
+                    text = "회원가입",
+                    color = Color.Gray,
+                    modifier = Modifier.clickable {
+                        val intent = Intent(context, SignUpActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        context.startActivity(intent)
+                    }
+                )
+            }
+        }
     }
+
 }
 
 // 비밀번호 TextField 함수
