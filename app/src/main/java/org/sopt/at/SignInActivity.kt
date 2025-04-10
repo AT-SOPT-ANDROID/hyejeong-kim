@@ -101,6 +101,11 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
 
     val autoLogin = AutoLogin(context)
 
+    // 로그인 버튼 색깔
+    val isFormFilled = id.isNotBlank() && password.isNotBlank()
+    val loginButtonColor = if (isFormFilled) Color(0xFFFF143C) else Color(0xFF404040)
+    val loginTextColor = if (isFormFilled) Color.White else Color.Gray
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -170,7 +175,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                     .fillMaxWidth()
                     .padding(top = 20.dp)
                     .height(45.dp)
-                    .background(Color(0xFF404040), RoundedCornerShape(5.dp))
+                    .background(loginButtonColor, RoundedCornerShape(5.dp))
                     .clickable(
                         // 리플 효과 제거
                         interactionSource = remember { MutableInteractionSource() },
@@ -198,7 +203,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 Text(
                     "로그인하기",
                     fontWeight = FontWeight.Bold,
-                    color = Color.Gray
+                    color = loginTextColor
                 )
             }
 
