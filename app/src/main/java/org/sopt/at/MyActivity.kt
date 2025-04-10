@@ -5,19 +5,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -63,27 +65,29 @@ fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
         )
 
         // 로그아웃 버튼
-        Button(
-            onClick = {
-                // 로그아웃 버튼 클릭 시 로그인 뷰로 이동
-                val intent = Intent(context, SignInActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                context.startActivity(intent)
-            },
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(50.dp),
-            shape = RoundedCornerShape(10.dp),
-            border = BorderStroke(1.dp, Color.Gray),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black,
-                contentColor = Color.LightGray
-            )
+                .size(50.dp)
+                .background(Color.Black, RoundedCornerShape(10.dp))
+                .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
+                .clickable(
+                    // 리플 효과 제거
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    // 로그아웃 버튼 클릭 시 로그인 뷰로 이동
+                    val intent = Intent(context, SignInActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    context.startActivity(intent)
+                },
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 "로그아웃",
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                color = Color.LightGray
             )
         }
     }
