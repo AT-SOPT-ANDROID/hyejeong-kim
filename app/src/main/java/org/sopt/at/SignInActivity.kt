@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -36,10 +37,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -77,6 +81,9 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
     // 스낵바
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    // 포커스
+    val focusRequester = remember { FocusRequester() }
 
     Scaffold(
         snackbarHost = {
@@ -119,7 +126,14 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 textStyle = TextStyle(
                     color = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(
+                    // 다음 버튼 클릭 시 비밀번호 textfield로 포커스 이동
+                    onNext = {
+                        focusRequester.requestFocus()
+                    }
+                )
             )
 
             // 비밀번호 입력 창
@@ -131,6 +145,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
+                    .focusRequester(focusRequester) // 포커스 지정
             )
 
             // 로그인하기 버튼
