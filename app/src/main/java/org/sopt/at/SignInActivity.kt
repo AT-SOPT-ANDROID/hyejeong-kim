@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.at.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
+import org.sopt.at.util.AutoLogin
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +63,18 @@ class SignInActivity : ComponentActivity() {
 
         val signUpId = intent.getStringExtra("ID") ?: ""
         val signUpPw = intent.getStringExtra("PW") ?: ""
+
+        val autoLogin = AutoLogin(this)
+
+        // 로그인 되어 있을 경우 My 뷰로 이동
+        if (autoLogin.isLoggedIn()) {
+            val intent = Intent(this, MyActivity::class.java).apply {
+                putExtra("Profile", signUpId)
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+            return
+        }
 
         setContent {
             ATSOPTANDROIDTheme {
@@ -85,6 +98,8 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
 
     // 포커스
     val focusRequester = remember { FocusRequester() }
+
+    val autoLogin = AutoLogin(context)
 
     Scaffold(
         snackbarHost = {
@@ -166,8 +181,10 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                             scope.launch {
                                 snackbarHostState.showSnackbar("회원 정보가 유효하지 않습니다.")
                             }
-                        } else {
-                            // 회원가입 정보 일치 시 MyActivity로 이동
+                        } else { // 회원가입 정보 일치 시
+                            // 자동 로그인 정보 저장
+                            autoLogin.saveLoginInfo(id, password)
+                            // MyActivity로 이동
                             val intent = Intent(context, MyActivity::class.java).apply {
                                 putExtra("Profile", id)
                                 flags =

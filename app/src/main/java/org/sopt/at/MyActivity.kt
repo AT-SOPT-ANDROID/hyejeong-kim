@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
+import org.sopt.at.util.AutoLogin
 
 class MyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,7 @@ class MyActivity : ComponentActivity() {
 @Composable
 fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val autoLogin = AutoLogin(context)
 
     Column(
         modifier = Modifier
@@ -58,7 +60,7 @@ fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = profileId,
+            text = autoLogin.getLoginInfo("userId"),
             color = Color.White,
             fontSize = 40.sp,
             modifier = Modifier.padding(top = 30.dp)
@@ -75,8 +77,10 @@ fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
                     // 리플 효과 제거
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
-                ) {
-                    // 로그아웃 버튼 클릭 시 로그인 뷰로 이동
+                ) { // 로그아웃 버튼 클릭 시
+                    // 자동 로그인 정보 제거
+                    autoLogin.logout()
+                    // 로그인 뷰로 이동
                     val intent = Intent(context, SignInActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     }
