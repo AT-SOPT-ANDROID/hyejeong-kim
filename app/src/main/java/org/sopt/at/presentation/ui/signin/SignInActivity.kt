@@ -105,9 +105,6 @@ fun LoginUi(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    // 포커스
-    val focusRequester = remember { FocusRequester() }
-
     val autoLogin = AutoLogin(context)
 
     // 로그인 버튼 색깔
@@ -161,13 +158,7 @@ fun LoginUi(
                     color = Color.White
                 ),
                 singleLine = true,
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(
-                    // 다음 버튼 클릭 시 비밀번호 textfield로 포커스 이동
-                    onNext = {
-                        focusRequester.requestFocus()
-                    }
-                )
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
             )
 
             // 비밀번호 입력 창
@@ -179,7 +170,6 @@ fun LoginUi(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
-                    .focusRequester(focusRequester) // 포커스 지정
             )
 
             // 로그인하기 버튼
