@@ -1,4 +1,4 @@
-package org.sopt.at
+package org.sopt.at.presentation.ui.my
 
 import android.content.Intent
 import android.os.Bundle
@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.sopt.at.presentation.ui.signin.SignInActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 import org.sopt.at.util.AutoLogin
 

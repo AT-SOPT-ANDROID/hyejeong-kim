@@ -1,4 +1,4 @@
-package org.sopt.at
+package org.sopt.at.presentation.ui.signin
 
 import android.content.Intent
 import android.os.Bundle
@@ -52,7 +52,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import org.sopt.at.signup.SignUpActivity
+import org.sopt.at.presentation.ui.my.MyActivity
+import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 import org.sopt.at.util.AutoLogin
 
