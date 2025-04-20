@@ -1,5 +1,6 @@
 package org.sopt.at.presentation.ui.signup
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +23,24 @@ class SignUpActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ATSOPTANDROIDTheme {
-                SignUpScreen()
+                SignUpScreen(
+                    navigateToBack = {
+                        // 뒤로가기 버튼 클릭 시 로그인 뷰로 이동
+                        val intent = Intent(this, SignInActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                    },
+                    navigateToSignIn = { id, pw ->
+                        // 다음 버튼 클릭 시 로그인 뷰로 이동
+                        val intent = Intent().apply {
+                            putExtra("ID", id)
+                            putExtra("PW", pw)
+                        }
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                )
             }
         }
     }
@@ -30,34 +48,24 @@ class SignUpActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier) {
+fun SignUpScreen(modifier: Modifier = Modifier,
+                 navigateToBack: () -> Unit = {},
+                 navigateToSignIn: (String, String) -> Unit = {_, _ ->}) {
     var currentStep by remember { mutableStateOf(1) }
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     when (currentStep) {
         1 -> IdInputScreen(
             id, { id = it },
             onNext = { currentStep = 2 },
             onBack = {
-                // 뒤로가기 버튼 클릭 시 로그인 뷰로 이동
-                val intent = Intent(context, SignInActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                context.startActivity(intent)
+                navigateToBack()
             }
         )
 
         else -> PwInputScreen(pw, { pw = it }, onNext = {
-            // 다음 버튼 클릭 시 로그인 뷰로 이동
-            val intent = Intent(context, SignInActivity::class.java).apply {
-                putExtra("ID", id)
-                putExtra("PW", pw)
-                flags =
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            context.startActivity(intent)
+            navigateToSignIn(id, pw)
         }, onBack = { currentStep = 1 })
     }
 

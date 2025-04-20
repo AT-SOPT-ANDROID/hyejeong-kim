@@ -2,9 +2,12 @@ package org.sopt.at.presentation.ui.signin
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -39,8 +41,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -59,22 +59,34 @@ import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.my.MyActivity
 import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
-import org.sopt.at.util.AutoLogin
+import org.sopt.at.core.util.AutoLogin
+
+const val ID_KEY = "ID"
+const val PW_KEY = "PW"
 
 class SignInActivity : ComponentActivity() {
+
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private var userId: String = ""
+    private var userPw: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val signUpId = intent.getStringExtra("ID") ?: ""
-        val signUpPw = intent.getStringExtra("PW") ?: ""
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.resultCode == RESULT_OK) {
+                userId = result.data?.getStringExtra(ID_KEY) ?: ""
+                userPw = result.data?.getStringExtra(PW_KEY) ?: ""
+            }
+        }
 
         val autoLogin = AutoLogin(this)
 
         // 로그인 되어 있을 경우 My 뷰로 이동
         if (autoLogin.isLoggedIn()) {
             val intent = Intent(this, MyActivity::class.java).apply {
-                putExtra("Profile", signUpId)
+                putExtra("Profile", userId)
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(intent)
@@ -83,7 +95,12 @@ class SignInActivity : ComponentActivity() {
 
         setContent {
             ATSOPTANDROIDTheme {
-                LoginUi(signUpId = signUpId, signUpPw = signUpPw)
+                LoginUi(signUpId = userId,
+                    signUpPw = userPw,
+                    navigateToSignUp = {
+                        val intent = Intent(this, SignUpActivity::class.java)
+                        resultLauncher.launch(intent)
+                })
             }
         }
     }
@@ -94,7 +111,8 @@ class SignInActivity : ComponentActivity() {
 fun LoginUi(
     modifier: Modifier = Modifier,
     signUpId: String = "",
-    signUpPw: String = ""
+    signUpPw: String = "",
+    navigateToSignUp: () -> Unit = {}
 ) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -113,7 +131,7 @@ fun LoginUi(
     val loginTextColor = if (isFormFilled) Color.White else Color.Gray
 
     val isValidProfile =
-        id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()
+        id == signUpId && password == signUpPw && signUpId.isNotBlank() && signUpPw.isNotBlank()
 
     Scaffold(
         snackbarHost = {
@@ -235,10 +253,7 @@ fun LoginUi(
                     text = stringResource(R.string.button_sign_up),
                     color = Color.Gray,
                     modifier = Modifier.clickable {
-                        val intent = Intent(context, SignUpActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        }
-                        context.startActivity(intent)
+                        navigateToSignUp()
                     }
                 )
             }
