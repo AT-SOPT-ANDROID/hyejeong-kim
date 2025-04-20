@@ -36,7 +36,7 @@ class MyActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val profileId = intent.getStringExtra("Profile") ?: ""
+        val profileId = intent.getStringExtra("Profile").orEmpty()
 
         setContent {
             ATSOPTANDROIDTheme {
