@@ -13,10 +13,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -31,11 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.at.R
 import org.sopt.at.core.component.textfield.PasswordTextField
+import org.sopt.at.core.component.topbar.TvingTopBar
+import org.sopt.at.core.util.noRippleClickable
 
 @Composable
 fun PwInputScreen(
@@ -58,6 +57,11 @@ fun PwInputScreen(
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
+        },
+        topBar = {
+            TvingTopBar(
+                onBackClick = onBack
+            )
         }
     ) { innerPadding ->
         Column(
@@ -68,24 +72,6 @@ fun PwInputScreen(
                 .padding(innerPadding)
                 .padding(15.dp)
         ) {
-            // 뒤로 가기 버튼
-            Box(
-                modifier = Modifier.size(24.dp)
-            ) {
-                IconButton(
-                    onClick = onBack,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(0.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBackIosNew,
-                        contentDescription = "뒤로가기",
-                        modifier = Modifier.fillMaxSize(),
-                        tint = Color.White
-                    )
-                }
-            }
 
             Column(
                 modifier = Modifier
@@ -129,11 +115,7 @@ fun PwInputScreen(
                         .size(50.dp)
                         .background(Color.Black, RoundedCornerShape(10.dp))
                         .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
-                        .clickable(
-                            // 리플 효과 제거
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) {
+                        .noRippleClickable {
                             // pw가 유효할 경우 로그인 뷰로 이동
                             if (isValidPw) {
                                 onNext()
@@ -147,14 +129,23 @@ fun PwInputScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "다음",
+                        text = stringResource(R.string.button_next),
                         fontSize = 16.sp,
                         color = Color.LightGray
                     )
                 }
-
             }
-
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewPwInputScreen() {
+    PwInputScreen(
+        pw = "",
+        onPwChange = {},
+        onNext = {},
+        onBack = {}
+    )
 }
