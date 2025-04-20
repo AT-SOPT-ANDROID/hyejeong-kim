@@ -7,8 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.signin.SignInActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 import org.sopt.at.util.AutoLogin
@@ -40,7 +38,7 @@ class MyActivity : ComponentActivity() {
 
         setContent {
             ATSOPTANDROIDTheme {
-                MyUi(profileId)
+                MyUi(profileId = profileId)
             }
         }
     }
@@ -48,7 +46,10 @@ class MyActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
+fun MyUi(
+    modifier: Modifier = Modifier,
+    profileId: String = ""
+) {
     val context = LocalContext.current
     val autoLogin = AutoLogin(context)
 
@@ -74,11 +75,7 @@ fun MyUi(profileId: String = "", modifier: Modifier = Modifier) {
                 .size(50.dp)
                 .background(Color.Black, RoundedCornerShape(10.dp))
                 .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
-                .clickable(
-                    // 리플 효과 제거
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { // 로그아웃 버튼 클릭 시
+                .noRippleClickable { // 로그아웃 버튼 클릭 시
                     // 자동 로그인 정보 제거
                     autoLogin.logout()
                     // 로그인 뷰로 이동
