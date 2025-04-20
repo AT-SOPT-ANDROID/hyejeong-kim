@@ -2,7 +2,6 @@ package org.sopt.at.presentation.ui.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,18 +19,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,22 +35,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.at.R
+import org.sopt.at.core.component.textfield.IdTextField
+import org.sopt.at.core.component.textfield.PasswordTextField
+import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.my.MyActivity
 import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
-import org.sopt.at.core.util.AutoLogin
 
 const val ID_KEY = "ID"
 const val PW_KEY = "PW"
@@ -74,12 +62,13 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.resultCode == RESULT_OK) {
-                userId = result.data?.getStringExtra(ID_KEY) ?: ""
-                userPw = result.data?.getStringExtra(PW_KEY) ?: ""
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    userId = result.data?.getStringExtra(ID_KEY) ?: ""
+                    userPw = result.data?.getStringExtra(PW_KEY) ?: ""
+                }
             }
-        }
 
         val autoLogin = AutoLogin(this)
 
@@ -95,12 +84,13 @@ class SignInActivity : ComponentActivity() {
 
         setContent {
             ATSOPTANDROIDTheme {
-                LoginUi(signUpId = userId,
+                LoginUi(
+                    signUpId = userId,
                     signUpPw = userPw,
                     navigateToSignUp = {
                         val intent = Intent(this, SignUpActivity::class.java)
                         resultLauncher.launch(intent)
-                })
+                    })
             }
         }
     }
@@ -153,30 +143,12 @@ fun LoginUi(
                 fontWeight = FontWeight.Bold
             )
 
-            // id 입력 창
-            TextField(
-                value = id,
-                onValueChange = { id = it },
-                placeholder = { Text(text = stringResource(R.string.textfield_id)) },
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
-                shape = RoundedCornerShape(5.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color(0xFF262626),
-                    unfocusedContainerColor = Color(0xFF262626),
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    cursorColor = Color.White,
-                    focusedPlaceholderColor = Color.Gray,
-                    unfocusedPlaceholderColor = Color.Gray
-                ),
-                textStyle = TextStyle(
-                    color = Color.White
-                ),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+            // 아이디 입력 창
+            IdTextField(
+                id = id,
+                onIdChange = { id = it },
+                modifier = Modifier
+                    .padding(top = 20.dp)
             )
 
             // 비밀번호 입력 창
@@ -260,51 +232,4 @@ fun LoginUi(
         }
     }
 
-}
-
-// 비밀번호 TextField 함수
-@Composable
-fun PasswordTextField(
-    password: String,
-    onPasswordChange: (String) -> Unit,
-    showPassword: Boolean,
-    onTogglePasswordVisibility: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    TextField(
-        value = password,
-        onValueChange = onPasswordChange,
-        placeholder = { Text("비밀번호") },
-        visualTransformation = if (showPassword) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        trailingIcon = {
-            IconButton(onClick = onTogglePasswordVisibility) {
-                Icon(
-                    imageVector = if (showPassword) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                    contentDescription = if (showPassword) "Hide password" else "Show password",
-                    tint = Color.Gray
-                )
-            }
-        },
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(5.dp),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color(0xFF262626),
-            unfocusedContainerColor = Color(0xFF262626),
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-            cursorColor = Color.White,
-            focusedPlaceholderColor = Color.Gray,
-            unfocusedPlaceholderColor = Color.Gray
-        ),
-        textStyle = TextStyle(
-            color = Color.White
-        ),
-        singleLine = true
-    )
 }

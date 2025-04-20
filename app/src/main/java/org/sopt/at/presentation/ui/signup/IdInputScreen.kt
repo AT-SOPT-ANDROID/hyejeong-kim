@@ -21,18 +21,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import org.sopt.at.core.component.textfield.IdTextField
 
 @Composable
 fun IdInputScreen(
@@ -100,29 +98,16 @@ fun IdInputScreen(
 
                     Column {
                         // 아이디 입력 창
-                        TextField(
-                            value = id,
-                            onValueChange = onIdChange,
-                            placeholder = { Text("아이디") },
-                            modifier = modifier
-                                .fillMaxWidth()
+                        IdTextField(
+                            id = id,
+                            onIdChange = onIdChange,
+                            modifier = Modifier
                                 .padding(top = 20.dp)
-                                .border(1.dp, Color.Gray, shape = RoundedCornerShape(5.dp)),
-                            shape = RoundedCornerShape(5.dp),
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = Color(0xFF262626),
-                                unfocusedContainerColor = Color(0xFF262626),
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent,
-                                cursorColor = Color.White,
-                                focusedPlaceholderColor = Color.Gray,
-                                unfocusedPlaceholderColor = Color.Gray
-                            ),
-                            textStyle = TextStyle(
-                                color = Color.White
-                            ),
-                            singleLine = true
+                                .border(
+                                    width = 1.dp,
+                                    color = Color.Gray,
+                                    shape = RoundedCornerShape(5.dp)
+                                )
                         )
 
                         Text(

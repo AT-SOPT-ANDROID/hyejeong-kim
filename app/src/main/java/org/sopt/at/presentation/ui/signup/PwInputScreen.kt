@@ -33,7 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import org.sopt.at.presentation.ui.signin.PasswordTextField
+import org.sopt.at.core.component.textfield.PasswordTextField
 
 @Composable
 fun PwInputScreen(
@@ -46,7 +46,8 @@ fun PwInputScreen(
     var showPassword by remember { mutableStateOf(value = false) }
 
     // pw 유효성 검사: 영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15자리
-    val isValidPw = pw.matches(Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#\$%^&*])[a-zA-Z0-9~!@#\$%^&*]{8,15}$"))
+    val isValidPw =
+        pw.matches(Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#\$%^&*])[a-zA-Z0-9~!@#\$%^&*]{8,15}$"))
 
     // 스낵바
     val scope = rememberCoroutineScope()
