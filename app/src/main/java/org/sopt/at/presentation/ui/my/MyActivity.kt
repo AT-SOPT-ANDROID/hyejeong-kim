@@ -71,8 +71,8 @@ fun MyUi(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Black, RoundedCornerShape(10.dp))
-                .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
+                .background(color = Color.Black, shape = RoundedCornerShape(10.dp))
+                .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(10.dp))
                 .padding(vertical = 14.dp)
                 .noRippleClickable { // 로그아웃 버튼 클릭 시
                     // 자동 로그인 정보 제거
