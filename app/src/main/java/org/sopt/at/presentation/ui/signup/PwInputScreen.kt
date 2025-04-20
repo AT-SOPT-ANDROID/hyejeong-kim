@@ -30,9 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import org.sopt.at.R
 import org.sopt.at.core.component.textfield.PasswordTextField
 
 @Composable
@@ -96,7 +98,7 @@ fun PwInputScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "비밀번호를 입력해주세요.",
+                        text = stringResource(R.string.sign_up_pw_input),
                         color = Color.White,
                         fontSize = 20.sp
                     )
@@ -113,7 +115,7 @@ fun PwInputScreen(
                         )
 
                         Text(
-                            text = "영문, 숫자, 특수문자(~!@#$%^) 조합 8~15자리",
+                            text = stringResource(R.string.sign_up_pw_condition),
                             color = Color.Gray,
                             fontSize = 12.sp
                         )

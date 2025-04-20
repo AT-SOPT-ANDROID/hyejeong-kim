@@ -27,9 +27,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 
 @Composable
@@ -91,7 +93,7 @@ fun IdInputScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "아이디를 입력해주세요.",
+                        text = stringResource(R.string.sign_up_id_input),
                         color = Color.White,
                         fontSize = 20.sp
                     )
@@ -111,7 +113,7 @@ fun IdInputScreen(
                         )
 
                         Text(
-                            text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
+                            text = stringResource(R.string.sign_up_id_condition),
                             color = Color.Gray,
                             fontSize = 12.sp
                         )
@@ -143,7 +145,7 @@ fun IdInputScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "다음",
+                        text = stringResource(R.string.button_next),
                         fontSize = 16.sp,
                         color = Color.LightGray
                     )
