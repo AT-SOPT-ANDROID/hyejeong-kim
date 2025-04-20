@@ -128,7 +128,8 @@ fun LoginUi(
                 .fillMaxSize()
                 .background(color = Color.Black)
                 .padding(innerPadding)
-                .padding(horizontal = 15.dp, vertical = 100.dp)
+                .padding(top = 100.dp)
+                .padding(horizontal = 15.dp)
         ) {
             Text(
                 text = stringResource(R.string.sign_in_title),
