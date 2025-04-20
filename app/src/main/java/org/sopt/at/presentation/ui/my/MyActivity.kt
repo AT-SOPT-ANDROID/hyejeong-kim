@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -72,9 +71,9 @@ fun MyUi(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(50.dp)
                 .background(Color.Black, RoundedCornerShape(10.dp))
                 .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
+                .padding(vertical = 14.dp)
                 .noRippleClickable { // 로그아웃 버튼 클릭 시
                     // 자동 로그인 정보 제거
                     autoLogin.logout()
