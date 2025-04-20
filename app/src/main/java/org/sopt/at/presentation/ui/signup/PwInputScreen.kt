@@ -37,11 +37,11 @@ import org.sopt.at.presentation.ui.signin.PasswordTextField
 
 @Composable
 fun PwInputScreen(
+    modifier: Modifier = Modifier,
     pw: String,
     onPwChange: (String) -> Unit,
     onNext: () -> Unit,
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    onBack: () -> Unit
 ) {
     var showPassword by remember { mutableStateOf(value = false) }
 
