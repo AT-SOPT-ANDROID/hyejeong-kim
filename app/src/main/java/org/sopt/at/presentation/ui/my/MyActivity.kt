@@ -20,9 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.sopt.at.R
 import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.signin.SignInActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
@@ -86,7 +88,7 @@ fun MyUi(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                "로그아웃",
+                text = stringResource(R.string.my_logout_button),
                 fontSize = 16.sp,
                 color = Color.LightGray
             )

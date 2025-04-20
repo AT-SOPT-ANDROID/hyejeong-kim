@@ -11,6 +11,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +44,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -52,6 +55,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import org.sopt.at.R
+import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.my.MyActivity
 import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
@@ -107,6 +112,8 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
     val loginButtonColor = if (isFormFilled) Color(0xFFFF143C) else Color(0xFF404040)
     val loginTextColor = if (isFormFilled) Color.White else Color.Gray
 
+    val isValidProfile = id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -120,7 +127,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 .padding(horizontal = 15.dp, vertical = 100.dp)
         ) {
             Text(
-                text = "TVING ID 로그인",
+                text = stringResource(R.string.sign_in_title),
                 color = Color.White,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
@@ -130,7 +137,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
             TextField(
                 value = id,
                 onValueChange = { id = it },
-                placeholder = { Text("아이디") },
+                placeholder = { Text(text = stringResource(R.string.textfield_id)) },
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
@@ -175,14 +182,10 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp)
-                    .height(45.dp)
                     .background(loginButtonColor, RoundedCornerShape(5.dp))
-                    .clickable(
-                        // 리플 효과 제거
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null
-                    ) {
-                        if (id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()) {
+                    .padding(vertical = 14.dp)
+                    .noRippleClickable {
+                        if (isValidProfile) {
                             // 회원 정보가 유효 하지 않을 시 스낵바
                             scope.launch {
                                 snackbarHostState.showSnackbar("회원 정보가 유효하지 않습니다.")
@@ -202,7 +205,7 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    "로그인하기",
+                    text = stringResource(R.string.button_sign_in),
                     fontWeight = FontWeight.Bold,
                     color = loginTextColor
                 )
@@ -212,27 +215,29 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp)
-                    .padding(top = 35.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    .padding(top = 35.dp)
+                    .height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "아이디 찾기",
+                    text = stringResource(R.string.button_find_id),
+                    color = Color.Gray
+                )
+                VerticalDivider(
+                    thickness = 1.dp,
                     color = Color.Gray
                 )
                 Text(
-                    text = "|",
+                    text = stringResource(R.string.button_find_pw),
+                    color = Color.Gray
+                )
+                VerticalDivider(
+                    thickness = 1.dp,
                     color = Color.Gray
                 )
                 Text(
-                    text = "비밀번호 찾기",
-                    color = Color.Gray
-                )
-                Text(
-                    text = "|",
-                    color = Color.Gray
-                )
-                Text(
-                    text = "회원가입",
+                    text = stringResource(R.string.button_sign_up),
                     color = Color.Gray,
                     modifier = Modifier.clickable {
                         val intent = Intent(context, SignUpActivity::class.java).apply {

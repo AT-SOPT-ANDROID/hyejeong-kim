@@ -3,4 +3,20 @@
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_my">MyActivity</string>
+
+    <!-- Button -->
+    <string name="button_sign_in">로그인 하기</string>
+    <string name="button_sign_up">회원가입</string>
+    <string name="button_find_id">아이디 찾기</string>
+    <string name="button_find_pw">비밀번호 찾기</string>
+
+    <!-- TextField -->
+    <string name="textfield_id">아이디</string>
+    <string name="textfield_pw">비밀번호</string>
+
+    <!-- SingIn -->
+    <string name="sign_in_title">TVING ID 로그인</string>
+
+    <!-- My -->
+    <string name="my_logout_button">로그아웃</string>
 </resources>
