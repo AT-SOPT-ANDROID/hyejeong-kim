@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,7 +83,7 @@ class SignInActivity : ComponentActivity() {
 
         setContent {
             ATSOPTANDROIDTheme {
-                LoginUi(signUpId, signUpPw)
+                LoginUi(signUpId = signUpId, signUpPw = signUpPw)
             }
         }
     }
@@ -92,7 +91,11 @@ class SignInActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = Modifier) {
+fun LoginUi(
+    modifier: Modifier = Modifier,
+    signUpId: String = "",
+    signUpPw: String = ""
+) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
@@ -112,7 +115,8 @@ fun LoginUi(signUpId: String = "", signUpPw: String = "", modifier: Modifier = M
     val loginButtonColor = if (isFormFilled) Color(0xFFFF143C) else Color(0xFF404040)
     val loginTextColor = if (isFormFilled) Color.White else Color.Gray
 
-    val isValidProfile = id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()
+    val isValidProfile =
+        id != signUpId || password != signUpPw || signUpId.isBlank() || signUpPw.isBlank()
 
     Scaffold(
         snackbarHost = {
