@@ -2,16 +2,11 @@ package org.sopt.at.presentation.ui.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -32,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.at.R
+import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.component.textfield.PasswordTextField
 import org.sopt.at.core.component.topbar.TvingTopBar
-import org.sopt.at.core.util.noRippleClickable
 
 @Composable
 fun PwInputScreen(
@@ -109,31 +104,20 @@ fun PwInputScreen(
                 }
 
                 // 다음 버튼
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .size(50.dp)
-                        .background(Color.Black, RoundedCornerShape(10.dp))
-                        .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
-                        .noRippleClickable {
-                            // pw가 유효할 경우 로그인 뷰로 이동
-                            if (isValidPw) {
-                                onNext()
-                            } else {
-                                // pw가 유효하지 않을 경우 스낵바
-                                scope.launch {
-                                    snackbarHostState.showSnackbar("비밀번호가 유효하지 않습니다.")
-                                }
+                TvingButton(
+                    onClick = {
+                        // pw가 유효할 경우 로그인 뷰로 이동
+                        if (isValidPw) {
+                            onNext()
+                        } else {
+                            // pw가 유효하지 않을 경우 스낵바
+                            scope.launch {
+                                snackbarHostState.showSnackbar("비밀번호가 유효하지 않습니다.")
                             }
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.button_next),
-                        fontSize = 16.sp,
-                        color = Color.LightGray
-                    )
-                }
+                        }
+                    },
+                    content = stringResource(R.string.button_next)
+                )
             }
         }
     }

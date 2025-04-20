@@ -2,16 +2,11 @@ package org.sopt.at.presentation.ui.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -29,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.at.R
+import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.topbar.TvingTopBar
 
@@ -105,35 +101,20 @@ fun IdInputScreen(
                 }
 
                 // 다음 버튼
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .size(50.dp)
-                        .background(Color.Black, RoundedCornerShape(10.dp))
-                        .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
-                        .clickable(
-                            // 리플 효과 제거
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) {
-                            // id가 유효할 경우 회원가입 비밀번호 뷰로 이동
-                            if (isValidId) {
-                                onNext()
-                            } else {
-                                // id가 유효 하지 않을 시 스낵바
-                                scope.launch {
-                                    snackbarHostState.showSnackbar("ID가 유효하지 않습니다.")
-                                }
+                TvingButton(
+                    onClick = {
+                        // id가 유효할 경우 회원가입 비밀번호 뷰로 이동
+                        if (isValidId) {
+                            onNext()
+                        } else {
+                            // id가 유효 하지 않을 시 스낵바
+                            scope.launch {
+                                snackbarHostState.showSnackbar("ID가 유효하지 않습니다.")
                             }
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.button_next),
-                        fontSize = 16.sp,
-                        color = Color.LightGray
-                    )
-                }
+                        }
+                    },
+                    content = stringResource(R.string.button_next)
+                )
             }
         }
     }
