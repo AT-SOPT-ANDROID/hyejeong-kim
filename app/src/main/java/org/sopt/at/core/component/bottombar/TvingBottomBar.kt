@@ -35,7 +35,9 @@ fun TvingBottomBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    BottomAppBar {
+    BottomAppBar(
+        containerColor = Color.Black
+    ) {
         screen.forEach { item ->
             NavigationBarItem(
                 icon = {
@@ -59,7 +61,11 @@ fun TvingBottomBar(
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.Transparent
+                    indicatorColor = Color.Transparent,
+                    unselectedIconColor = Color.Gray,
+                    unselectedTextColor = Color.Gray,
+                    selectedIconColor = Color.White,
+                    selectedTextColor = Color.White
                 )
             )
         }
