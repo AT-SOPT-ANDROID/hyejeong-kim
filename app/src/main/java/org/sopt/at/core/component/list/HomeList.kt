@@ -1,6 +1,5 @@
 package org.sopt.at.core.component.list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,15 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,18 +58,12 @@ fun HomeList(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             itemsIndexed(itemList) { index, item ->
-                Card(
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = item),
-                        contentDescription = "HomeList",
-                        modifier = Modifier
-                            .width(120.dp)
-                            .height(180.dp),
-                        contentScale = ContentScale.Crop
-                    )
-                }
+                HomeListCardItem(
+                    item = item,
+                    modifier = Modifier
+                        .width(120.dp)
+                        .height(160.dp)
+                )
             }
         }
     }
