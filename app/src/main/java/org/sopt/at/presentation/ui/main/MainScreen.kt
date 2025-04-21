@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.component.bottombar.TvingBottomBar
 import org.sopt.at.core.component.bottombar.navigation.BottomNavGraph
+import org.sopt.at.core.component.topbar.TvingHomeTopBar
 
 @Composable
 fun MainScreen(
@@ -15,6 +16,9 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     Scaffold(
+        topBar = {
+            TvingHomeTopBar()
+        },
         bottomBar = {
             TvingBottomBar(navController = navController)
         }
