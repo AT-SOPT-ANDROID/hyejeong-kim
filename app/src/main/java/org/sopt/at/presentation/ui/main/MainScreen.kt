@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.component.bottombar.TvingBottomBar
-import org.sopt.at.core.component.bottombar.navigation.NavigationGraph
+import org.sopt.at.core.component.bottombar.navigation.BottomNavGraph
 
 @Composable
 fun MainScreen(
@@ -19,7 +19,7 @@ fun MainScreen(
             TvingBottomBar(navController = navController)
         }
     ) { innerPadding ->
-        NavigationGraph(
+        BottomNavGraph(
             modifier = Modifier.padding(innerPadding),
             navController = navController
         )
