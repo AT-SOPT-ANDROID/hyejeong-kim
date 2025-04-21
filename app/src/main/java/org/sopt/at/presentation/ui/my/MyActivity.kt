@@ -25,10 +25,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.at.R
+import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.signin.SignInActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
-import org.sopt.at.core.util.AutoLogin
 
 class MyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
