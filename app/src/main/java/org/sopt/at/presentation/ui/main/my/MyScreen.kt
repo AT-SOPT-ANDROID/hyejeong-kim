@@ -2,10 +2,14 @@ package org.sopt.at.presentation.ui.main.my
 
 import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,15 +20,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.util.AutoLogin
+import org.sopt.at.core.util.noRippleClickable
+import org.sopt.at.presentation.ui.main.MainViewModel
 import org.sopt.at.presentation.ui.signin.SignInActivity
 
 @Composable
 fun MyScreen(
-    modifier: Modifier = Modifier,
-    profileId: String = ""
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val autoLogin = AutoLogin(context)
@@ -63,7 +69,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewMyScreen() {
-    MyScreen(
-        profileId = ""
-    )
+    MyScreen()
 }

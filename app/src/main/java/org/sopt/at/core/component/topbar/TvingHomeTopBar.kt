@@ -2,6 +2,7 @@ package org.sopt.at.core.component.topbar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,10 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
+import org.sopt.at.core.navigation.NavRoute
 
 @Composable
-fun TvingHomeTopBar(modifier: Modifier = Modifier) {
+fun TvingHomeTopBar(
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,12 +38,19 @@ fun TvingHomeTopBar(modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(id = R.drawable.tving_logo),
             contentDescription = "TVING LOGO",
-            modifier = Modifier.padding(0.dp).size(width = 80.dp, height = 32.dp)
+            modifier = Modifier
+                .padding(0.dp)
+                .size(width = 80.dp, height = 32.dp)
         )
         Image(
             painter = painterResource(id = R.drawable.tving_square_logo),
             contentDescription = "TVING SQUARE LOGO",
-            modifier = Modifier.padding(0.dp).size(24.dp)
+            modifier = Modifier
+                .padding(0.dp)
+                .size(24.dp)
+                .clickable {
+                    navController.navigate(route = NavRoute.My.route)
+                }
         )
     }
 }
@@ -42,5 +58,6 @@ fun TvingHomeTopBar(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun PreviewTvingHomeTopBar() {
-    TvingHomeTopBar()
+    val navController = rememberNavController()
+    TvingHomeTopBar(navController = navController)
 }

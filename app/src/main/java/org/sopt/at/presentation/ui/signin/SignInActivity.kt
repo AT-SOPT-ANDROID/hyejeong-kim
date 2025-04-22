@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.at.core.util.AutoLogin
-import org.sopt.at.presentation.ui.main.my.MyActivity
+import org.sopt.at.presentation.ui.main.MainActivity
 import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
@@ -35,9 +35,9 @@ class SignInActivity : ComponentActivity() {
 
         val autoLogin = AutoLogin(this)
 
-        // 로그인 되어 있을 경우 My 뷰로 이동
+        // 로그인 되어 있을 경우 Main 뷰로 이동
         if (autoLogin.isLoggedIn()) {
-            val intent = Intent(this, MyActivity::class.java).apply {
+            val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("Profile", userId)
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             }

@@ -1,41 +1,44 @@
-package org.sopt.at.core.component.bottombar.navigation
+package org.sopt.at.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import org.sopt.at.core.component.bottombar.BottomNavItem
 import org.sopt.at.presentation.ui.main.history.HistoryScreen
 import org.sopt.at.presentation.ui.main.home.HomeScreen
 import org.sopt.at.presentation.ui.main.live.LiveScreen
+import org.sopt.at.presentation.ui.main.my.MyScreen
 import org.sopt.at.presentation.ui.main.search.SearchScreen
 import org.sopt.at.presentation.ui.main.shorts.ShortsScreen
 
 @Composable
-fun BottomNavGraph(
+fun NavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavItem.Home.route,
+        startDestination = BottomNavRoute.Home.route,
         modifier = modifier
     ) {
-        composable(route = BottomNavItem.Home.route) {
+        composable(route = BottomNavRoute.Home.route) {
             HomeScreen()
         }
-        composable(route = BottomNavItem.Shorts.route) {
+        composable(route = BottomNavRoute.Shorts.route) {
             ShortsScreen()
         }
-        composable(route = BottomNavItem.Live.route) {
+        composable(route = BottomNavRoute.Live.route) {
             LiveScreen()
         }
-        composable(route = BottomNavItem.Search.route) {
+        composable(route = BottomNavRoute.Search.route) {
             SearchScreen()
         }
-        composable(route = BottomNavItem.History.route) {
+        composable(route = BottomNavRoute.History.route) {
             HistoryScreen()
+        }
+        composable(route = NavRoute.My.route) {
+            MyScreen()
         }
     }
 }

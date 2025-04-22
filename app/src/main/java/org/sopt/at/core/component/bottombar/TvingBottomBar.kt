@@ -18,18 +18,19 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.sopt.at.core.navigation.BottomNavRoute
 
 @Composable
 fun TvingBottomBar(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val screen = listOf<BottomNavItem>(
-        BottomNavItem.Home,
-        BottomNavItem.Shorts,
-        BottomNavItem.Live,
-        BottomNavItem.Search,
-        BottomNavItem.History
+    val screen = listOf<BottomNavRoute>(
+        BottomNavRoute.Home,
+        BottomNavRoute.Shorts,
+        BottomNavRoute.Live,
+        BottomNavRoute.Search,
+        BottomNavRoute.History
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -53,11 +54,10 @@ fun TvingBottomBar(
                 },
                 onClick = {
                     navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
+                        // 그래프의 시작 위치로 이동
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true // 같은 화면 중복 방지
+                        restoreState = true // 상태 복원
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(

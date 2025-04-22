@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import org.sopt.at.core.component.bottombar.BottomNavItem
 import org.sopt.at.core.component.bottombar.TvingBottomBar
-import org.sopt.at.core.component.bottombar.navigation.BottomNavGraph
 import org.sopt.at.core.component.topbar.TvingHomeTopBar
+import org.sopt.at.core.navigation.BottomNavRoute
+import org.sopt.at.core.navigation.NavGraph
 
 @Composable
 fun MainScreen(
@@ -24,15 +24,17 @@ fun MainScreen(
 
     Scaffold(
         topBar = {
-            if (currentRoute == BottomNavItem.Home.route) {
-                TvingHomeTopBar()
+            if (currentRoute == BottomNavRoute.Home.route) {
+                TvingHomeTopBar(
+                    navController = navController
+                )
             }
         },
         bottomBar = {
             TvingBottomBar(navController = navController)
         }
     ) { innerPadding ->
-        BottomNavGraph(
+        NavGraph(
             modifier = Modifier.padding(innerPadding),
             navController = navController
         )

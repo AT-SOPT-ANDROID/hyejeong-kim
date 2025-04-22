@@ -36,7 +36,9 @@ fun SignUpScreen(
             onPwChange = { pw = it },
             onNext = {
                 navigateToSignIn(id, pw)
-            }, onBack = { currentStep = 1 })
+            },
+            onBack = { currentStep = 1 }
+        )
     }
 
 }
