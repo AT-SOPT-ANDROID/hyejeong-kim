@@ -1,14 +1,17 @@
 package org.sopt.at.presentation.ui.main.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,53 +25,89 @@ import org.sopt.at.R
 import org.sopt.at.core.component.list.HomeList
 import org.sopt.at.core.component.list.HomeListCardItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel()
 ) {
+    val tabSections by viewModel.tabSections.collectAsState()
+    val selectedTabIndex by viewModel.selectedTabIndex.collectAsState()
+
     val bannerList by viewModel.bannerList.collectAsState()
     val todayList by viewModel.todayList.collectAsState()
     val nowList by viewModel.nowList.collectAsState()
 
-    // 스크롤
-    val scrollState = rememberScrollState()
+    // 배너 페이지 상태
+    val pagerState = rememberPagerState(
+        pageCount = { bannerList.size },
+        initialPage = 0)
 
-    Column(
-        modifier = modifier
+    LazyColumn(
+        modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Black)
-            .verticalScroll(scrollState)
     ) {
-        // 배너
-        val pagerState = rememberPagerState(pageCount = { bannerList.size })
-
-        HorizontalPager(
-            state = pagerState,
-            pageSpacing = 8.dp,
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) { page ->
-            HomeListCardItem(
-                item = bannerList[page],
+        stickyHeader {
+            TabRow(
+                selectedTabIndex = selectedTabIndex.coerceAtLeast(0),
                 modifier = Modifier
+                    .fillMaxWidth(),
+                backgroundColor = Color.Black,
+                contentColor = Color.White,
+                indicator = {}
+            ) {
+                tabSections.forEachIndexed { index, resId ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { viewModel.selectTab(index) },
+                        text = {
+                            Text(
+                                text = stringResource(id = resId),
+                                color = if (selectedTabIndex == index) Color.White else Color.Gray
+                            )
+                        }
+                    )
+                }
+            }
+        }
+
+        // 배너
+        item {
+            HorizontalPager(
+                state = pagerState,
+                pageSpacing = 8.dp,
+                modifier = Modifier
+                    .padding(16.dp)
                     .fillMaxWidth()
-            )
+            ) { page ->
+                HomeListCardItem(
+                    item = bannerList[page],
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(3f / 4f)
+                )
+            }
         }
 
         // 오늘의 티빙 TOP 20
-        HomeList(
-            title = stringResource(R.string.home_today_20),
-            itemList = todayList
-        )
+        item {
+            HomeList(
+                title = stringResource(R.string.home_today_20),
+                itemList = todayList
+            )
+        }
 
         // 지금 방영 중인 콘텐츠
-        HomeList(
-            title = stringResource(R.string.home_now),
-            itemList = nowList
-        )
+        item {
+            HomeList(
+                title = stringResource(R.string.home_now),
+                itemList = nowList
+            )
+        }
     }
+
+
 }
 
 @Preview(showBackground = true)
