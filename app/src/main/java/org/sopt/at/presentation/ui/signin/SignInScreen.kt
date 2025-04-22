@@ -38,6 +38,7 @@ import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
 import org.sopt.at.core.util.AutoLogin
+import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.presentation.ui.main.MainActivity
 
@@ -124,7 +125,6 @@ fun SignInScreen(
                             autoLogin.saveLoginInfo(id, password)
                             // MainActivity로 이동
                             val intent = Intent(context, MainActivity::class.java).apply {
-                                putExtra(ID_KEY, id)
                                 flags =
                                     Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             }

@@ -8,12 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.at.core.util.AutoLogin
+import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.presentation.ui.main.MainActivity
 import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
-
-const val ID_KEY = "ID"
-const val PW_KEY = "PW"
 
 class SignInActivity : ComponentActivity() {
 
@@ -28,8 +26,8 @@ class SignInActivity : ComponentActivity() {
         resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
-                    userId = result.data?.getStringExtra(ID_KEY) ?: ""
-                    userPw = result.data?.getStringExtra(PW_KEY) ?: ""
+                    userId = result.data?.getStringExtra(IntentKeys.ID_KEY) ?: ""
+                    userPw = result.data?.getStringExtra(IntentKeys.PW_KEY) ?: ""
                 }
             }
 
