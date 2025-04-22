@@ -60,4 +60,6 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
 }
