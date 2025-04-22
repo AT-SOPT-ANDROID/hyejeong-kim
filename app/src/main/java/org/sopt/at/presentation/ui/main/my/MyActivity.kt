@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui.my
+package org.sopt.at.presentation.ui.main.my
 
 import android.content.Intent
 import android.os.Bundle

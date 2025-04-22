@@ -39,7 +39,7 @@ import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
 import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.noRippleClickable
-import org.sopt.at.presentation.ui.my.MyActivity
+import org.sopt.at.presentation.ui.main.my.MyActivity
 
 @Composable
 fun SignInScreen(

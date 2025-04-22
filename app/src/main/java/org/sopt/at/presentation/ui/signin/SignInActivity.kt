@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.at.core.util.AutoLogin
-import org.sopt.at.presentation.ui.my.MyActivity
+import org.sopt.at.presentation.ui.main.my.MyActivity
 import org.sopt.at.presentation.ui.signup.SignUpActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
