@@ -1,7 +1,7 @@
 package org.sopt.at.core.component.topbar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +26,7 @@ fun TvingTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .background(color = Color.Black)
             .padding(15.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

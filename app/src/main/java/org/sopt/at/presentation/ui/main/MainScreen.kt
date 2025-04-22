@@ -10,8 +10,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.component.bottombar.TvingBottomBar
 import org.sopt.at.core.component.topbar.TvingHomeTopBar
+import org.sopt.at.core.component.topbar.TvingTopBar
 import org.sopt.at.core.navigation.BottomNavRoute
 import org.sopt.at.core.navigation.NavGraph
+import org.sopt.at.core.navigation.NavRoute
 
 @Composable
 fun MainScreen(
@@ -27,6 +29,12 @@ fun MainScreen(
             if (currentRoute == BottomNavRoute.Home.route) {
                 TvingHomeTopBar(
                     navController = navController
+                )
+            } else if (currentRoute == NavRoute.My.route) {
+                TvingTopBar(
+                    onBackClick = {
+                        navController.navigate(route = BottomNavRoute.Home.route)
+                    }
                 )
             }
         },
