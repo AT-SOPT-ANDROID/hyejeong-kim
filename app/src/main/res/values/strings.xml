@@ -38,6 +38,8 @@
     <!-- Dialog -->
     <string name="history_dialog_add">추가</string>
     <string name="history_dialog_add_series">시리즈를 추가하시겠습니까?</string>
+    <string name="history_dialog_delete">삭제</string>
+    <string name="history_dialog_delte_series">시리즈를 삭제하시겠습니까?</string>
     
     <!-- Tab Layout-->
     <string name="tab_drama">드라마</string>

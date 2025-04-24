@@ -12,11 +12,19 @@ import org.sopt.at.data.repository.SeriesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor(private val seriesRepository: SeriesRepository) :
+class HistoryViewModel @Inject constructor(
+    private val seriesRepository: SeriesRepository
+) :
     ViewModel() {
 
     private val _seriesList = MutableStateFlow<List<Series>>(emptyList())
     val seriesList: StateFlow<List<Series>> = _seriesList.asStateFlow()
+
+    private val _showDeleteDialog = MutableStateFlow<Boolean>(false)
+    val showDeleteDialog: StateFlow<Boolean> = _showDeleteDialog.asStateFlow()
+
+    private val _selectedSeries = MutableStateFlow<Series>(Series())
+    val selectedSeries: StateFlow<Series> = _selectedSeries.asStateFlow()
 
     init {
         setSeriesList()
@@ -31,6 +39,7 @@ class HistoryViewModel @Inject constructor(private val seriesRepository: SeriesR
     }
 
     fun insertSeries() {
+        // 임의의 시리즈 설정
         val series = Series(
             title = "시리즈",
             imageUrl = "https://i.postimg.cc/d0y0GKnN/20240501-174053.jpg"
@@ -39,5 +48,20 @@ class HistoryViewModel @Inject constructor(private val seriesRepository: SeriesR
         viewModelScope.launch {
             seriesRepository.insertSeries(series)
         }
+    }
+
+    fun deleteSeries(series: Series) {
+        viewModelScope.launch {
+            seriesRepository.deleteSeries(series = series)
+        }
+    }
+
+    fun showDeleteDialog(selectedSeries: Series) {
+        _showDeleteDialog.value = true
+        _selectedSeries.value = selectedSeries
+    }
+
+    fun dismissDeleteDialog() {
+        _showDeleteDialog.value = false
     }
 }

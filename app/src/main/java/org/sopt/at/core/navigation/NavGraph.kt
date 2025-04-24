@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.sopt.at.presentation.ui.main.history.HistoryScreen
+import org.sopt.at.presentation.ui.main.history.HistoryViewModel
 import org.sopt.at.presentation.ui.main.home.HomeScreen
 import org.sopt.at.presentation.ui.main.live.LiveScreen
 import org.sopt.at.presentation.ui.main.my.MyScreen
@@ -15,7 +16,8 @@ import org.sopt.at.presentation.ui.main.shorts.ShortsScreen
 @Composable
 fun NavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    historyViewModel: HistoryViewModel
 ) {
     NavHost(
         navController = navController,
@@ -35,7 +37,7 @@ fun NavGraph(
             SearchScreen()
         }
         composable(route = BottomNavRoute.History.route) {
-            HistoryScreen()
+            HistoryScreen(viewModel = historyViewModel)
         }
         composable(route = NavRoute.My.route) {
             MyScreen()

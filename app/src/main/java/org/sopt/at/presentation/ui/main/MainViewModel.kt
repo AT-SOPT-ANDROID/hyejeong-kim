@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel : ViewModel() {
-    private val _showDialog = MutableStateFlow<Boolean>(false)
-    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
+    private val _showAddDialog = MutableStateFlow<Boolean>(false)
+    val showAddDialog: StateFlow<Boolean> = _showAddDialog.asStateFlow()
 
-    fun showDialog() {
-        _showDialog.value = true
+    fun showAddDialog() {
+        _showAddDialog.value = true
     }
 
-    fun dismissDialog() {
-        _showDialog.value = false
+    fun dismissAddDialog() {
+        _showAddDialog.value = false
     }
 }

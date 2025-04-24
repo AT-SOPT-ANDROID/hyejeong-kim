@@ -1,7 +1,9 @@
 package org.sopt.at.core.component.list
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -17,16 +19,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.sopt.at.R
 import org.sopt.at.data.local.Series
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HistorySeriesItem(
     modifier: Modifier = Modifier,
-    series: Series
+    series: Series,
+    onLongClick: () -> Unit = {}
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                },
+                onLongClick = onLongClick
+            )
             .background(Color.Black)
             .fillMaxWidth()
             .padding(16.dp),
@@ -36,7 +46,7 @@ fun HistorySeriesItem(
             painter = painterResource(R.drawable.poster1),
             contentDescription = "series image",
             modifier = Modifier
-                .size(32.dp)
+                .size(56.dp)
                 .aspectRatio(1f / 1f),
             contentScale = ContentScale.Crop
         )
@@ -44,8 +54,9 @@ fun HistorySeriesItem(
         Spacer(modifier = Modifier.size(12.dp))
 
         Text(
-            text = "시리즈 제목",
-            color = Color.White
+            text = "${series.title} ${series.id}",
+            color = Color.White,
+            fontSize = 18.sp
         )
     }
 }

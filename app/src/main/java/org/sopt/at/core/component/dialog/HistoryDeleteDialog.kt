@@ -27,11 +27,10 @@ import org.sopt.at.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryDialog(
+fun HistoryDeleteDialog(
     modifier: Modifier = Modifier,
-    onAddClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
-    onDismissRequest: () -> Unit = {}
+    onDismissRequest: () -> Unit = {},
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -50,7 +49,7 @@ fun HistoryDialog(
                         .fillMaxWidth()
                 )
                 Text(
-                    text = stringResource(R.string.history_dialog_add_series),
+                    text = stringResource(R.string.history_dialog_delte_series),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -66,7 +65,7 @@ fun HistoryDialog(
                 )
                 Button(
                     onClick = {
-                        onAddClick()
+                        onDeleteClick()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -77,7 +76,7 @@ fun HistoryDialog(
                     )
                 ) {
                     Text(
-                        text = stringResource(R.string.history_dialog_add),
+                        text = stringResource(R.string.history_dialog_delete),
                         fontSize = 16.sp
                     )
                 }
@@ -93,6 +92,6 @@ fun HistoryDialog(
 
 @Preview
 @Composable
-private fun PreviewHistoryDialog() {
-    HistoryDialog()
+private fun PreviewHistoryDeleteDialog() {
+    HistoryDeleteDialog()
 }
