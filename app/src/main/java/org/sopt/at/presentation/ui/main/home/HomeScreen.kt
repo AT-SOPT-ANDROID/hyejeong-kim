@@ -2,6 +2,7 @@ package org.sopt.at.presentation.ui.main.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,11 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.at.R
 import org.sopt.at.core.component.list.HomeList
@@ -41,7 +44,8 @@ fun HomeScreen(
     // 배너 페이지 상태
     val pagerState = rememberPagerState(
         pageCount = { bannerList.size },
-        initialPage = 0)
+        initialPage = 0
+    )
 
     LazyColumn(
         modifier = Modifier
@@ -61,13 +65,21 @@ fun HomeScreen(
                     Tab(
                         selected = selectedTabIndex == index,
                         onClick = { viewModel.selectTab(index) },
-                        text = {
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Text(
                                 text = stringResource(id = resId),
-                                color = if (selectedTabIndex == index) Color.White else Color.Gray
+                                color = if (selectedTabIndex == index) Color.White else Color.Gray,
+                                fontSize = 14.sp,
+                                maxLines = 1
                             )
                         }
-                    )
+                    }
                 }
             }
         }
