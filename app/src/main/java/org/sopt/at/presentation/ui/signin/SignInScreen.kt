@@ -38,8 +38,9 @@ import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
 import org.sopt.at.core.util.AutoLogin
+import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.core.util.noRippleClickable
-import org.sopt.at.presentation.ui.my.MyActivity
+import org.sopt.at.presentation.ui.main.MainActivity
 
 @Composable
 fun SignInScreen(
@@ -122,9 +123,8 @@ fun SignInScreen(
                         } else { // 회원가입 정보 일치 시
                             // 자동 로그인 정보 저장
                             autoLogin.saveLoginInfo(id, password)
-                            // MyActivity로 이동
-                            val intent = Intent(context, MyActivity::class.java).apply {
-                                putExtra("Profile", id)
+                            // MainActivity로 이동
+                            val intent = Intent(context, MainActivity::class.java).apply {
                                 flags =
                                     Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             }

@@ -2,7 +2,7 @@
     <string name="app_name">AT SOPT ANDROID</string>
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 
     <!-- Button -->
     <string name="button_sign_in">로그인 하기</string>
@@ -26,4 +26,34 @@
     
     <!-- My -->
     <string name="my_logout_button">로그아웃</string>
+
+    <!-- Home -->
+    <string name="home_today_20">오늘의 티빙 TOP 20</string>
+    <string name="home_now">지금 방영 중인 콘텐츠</string>
+    <string name="home_more">더보기</string>
+
+    <!-- History -->
+    <string name="history_series_list">찜한 목록</string>
+
+    <!-- Dialog -->
+    <string name="history_dialog_add">추가</string>
+    <string name="history_dialog_add_series">시리즈를 추가하시겠습니까?</string>
+    <string name="history_dialog_delete">삭제</string>
+    <string name="history_dialog_delte_series">시리즈를 삭제하시겠습니까?</string>
+    
+    <!-- Tab Layout-->
+    <string name="tab_drama">드라마</string>
+    <string name="tab_ent">예능</string>
+    <string name="tab_movie">영화</string>
+    <string name="tab_sports">스포츠</string>
+    <string name="tab_ani">애니</string>
+    <string name="tab_news">뉴스</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">HOME</string>
+    <string name="nav_shorts">SHORTS</string>
+    <string name="nav_live">LIVE</string>
+    <string name="nav_search">SEARCH</string>
+    <string name="nav_history">HISTORY</string>
+    <string name="nav_my">MY</string>
 </resources>

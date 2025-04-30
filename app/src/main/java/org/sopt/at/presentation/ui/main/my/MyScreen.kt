@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui.my
+package org.sopt.at.presentation.ui.main.my
 
 import android.content.Intent
 import androidx.compose.foundation.background
@@ -19,12 +19,12 @@ import androidx.compose.ui.unit.sp
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.util.AutoLogin
+import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.presentation.ui.signin.SignInActivity
 
 @Composable
 fun MyScreen(
-    modifier: Modifier = Modifier,
-    profileId: String = ""
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val autoLogin = AutoLogin(context)
@@ -38,7 +38,7 @@ fun MyScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = autoLogin.getLoginInfo("userId"),
+            text = autoLogin.getLoginInfo(IntentKeys.ID_KEY),
             color = Color.White,
             fontSize = 40.sp,
             modifier = Modifier.padding(top = 30.dp)
@@ -63,7 +63,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewMyScreen() {
-    MyScreen(
-        profileId = ""
-    )
+    MyScreen()
 }
