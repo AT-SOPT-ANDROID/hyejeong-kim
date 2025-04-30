@@ -18,7 +18,7 @@ fun HistoryScreen(
     // UI, ViewModel 분리
     HistoryContent(
         seriesList = seriesList,
-        viewModel = viewModel
+        showDeleteDialog = viewModel::showDeleteDialog
     )
 }
 

@@ -26,10 +26,10 @@ import org.sopt.at.presentation.ui.main.history.HistoryViewModel
 fun HistoryContent(
     modifier: Modifier = Modifier,
     seriesList: List<Series>,
-    viewModel: HistoryViewModel
+    showDeleteDialog: (Series) -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(16.dp)
@@ -43,7 +43,7 @@ fun HistoryContent(
             itemsIndexed(seriesList) { index, series ->
                 HistorySeriesItem(
                     onLongClick = {
-                        viewModel.showDeleteDialog(series)
+                        showDeleteDialog(series)
                     },
                     series = series
                 )
@@ -56,5 +56,8 @@ fun HistoryContent(
 @Composable
 private fun PreviewHistoryContent() {
     val viewModel: HistoryViewModel = hiltViewModel()
-    HistoryContent(seriesList = emptyList(), viewModel = viewModel)
+    HistoryContent(
+        seriesList = emptyList(),
+        showDeleteDialog = viewModel::showDeleteDialog
+    )
 }
