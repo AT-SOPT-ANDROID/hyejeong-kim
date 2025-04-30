@@ -28,9 +28,8 @@ import org.sopt.at.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryAddDialog(
-    modifier: Modifier = Modifier,
-    onAddClick: () -> Unit = {},
-    onDismissRequest: () -> Unit = {},
+    onAddClick: () -> Unit,
+    onDismissRequest: () -> Unit
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -93,5 +92,8 @@ fun HistoryAddDialog(
 @Preview
 @Composable
 private fun PreviewHistoryAddDialog() {
-    HistoryAddDialog()
+    HistoryAddDialog(
+        onAddClick = {},
+        onDismissRequest = {}
+    )
 }
