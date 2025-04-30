@@ -39,7 +39,6 @@ fun TvingHomeTopBar(
             painter = painterResource(id = R.drawable.tving_logo),
             contentDescription = "TVING LOGO",
             modifier = Modifier
-                .padding(0.dp)
                 .size(width = 80.dp, height = 32.dp)
         )
         Image(

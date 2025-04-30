@@ -35,7 +35,6 @@ fun TvingTopBar(
             onClick = onBackClick,
             modifier = Modifier
                 .size(24.dp)
-                .padding(0.dp)
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBackIosNew,
