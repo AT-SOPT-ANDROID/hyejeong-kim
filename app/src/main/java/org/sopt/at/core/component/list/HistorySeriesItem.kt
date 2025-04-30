@@ -47,7 +47,7 @@ fun HistorySeriesItem(
             contentDescription = "series image",
             modifier = Modifier
                 .size(56.dp)
-                .aspectRatio(1f / 1f),
+                .aspectRatio(1f),
             contentScale = ContentScale.Crop
         )
 
