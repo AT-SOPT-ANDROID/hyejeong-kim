@@ -15,17 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
-import org.sopt.at.core.navigation.NavRoute
 
 @Composable
 fun TvingHomeTopBar(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navigateToMy: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -48,7 +43,7 @@ fun TvingHomeTopBar(
                 .padding(0.dp)
                 .size(24.dp)
                 .clickable {
-                    navController.navigate(route = NavRoute.My.route)
+                    navigateToMy()
                 }
         )
     }
@@ -57,6 +52,7 @@ fun TvingHomeTopBar(
 @Preview
 @Composable
 private fun PreviewTvingHomeTopBar() {
-    val navController = rememberNavController()
-    TvingHomeTopBar(navController = navController)
+    TvingHomeTopBar(
+        navigateToMy = {}
+    )
 }
