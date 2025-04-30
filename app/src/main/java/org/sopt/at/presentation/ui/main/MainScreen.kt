@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.component.bottombar.TvingBottomBar
 import org.sopt.at.core.component.dialog.HistoryDialog
 import org.sopt.at.core.component.fab.HistoryFab
 import org.sopt.at.core.component.topbar.TvingHomeTopBar
 import org.sopt.at.core.component.topbar.TvingTopBar
 import org.sopt.at.core.navigation.BottomNavRoute
+import org.sopt.at.core.navigation.LocalNavController
 import org.sopt.at.core.navigation.NavGraph
 import org.sopt.at.core.navigation.NavRoute
 import org.sopt.at.presentation.ui.main.history.HistoryViewModel
@@ -28,7 +28,7 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     historyViewModel: HistoryViewModel = hiltViewModel()
 ) {
-    val navController = rememberNavController()
+    val navController = LocalNavController.current
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -50,7 +50,7 @@ fun MainScreen(
             }
         },
         bottomBar = {
-            TvingBottomBar(navController = navController)
+            TvingBottomBar()
         },
         floatingActionButton = {
             if (currentRoute == BottomNavRoute.History.route) {

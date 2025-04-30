@@ -14,17 +14,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.navigation.BottomNavRoute
+import org.sopt.at.core.navigation.LocalNavController
 
 @Composable
 fun TvingBottomBar(
-    navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val navController = LocalNavController.current
+
     val screen = listOf<BottomNavRoute>(
         BottomNavRoute.Home,
         BottomNavRoute.Shorts,
@@ -75,6 +75,5 @@ fun TvingBottomBar(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewTvingBottomBar() {
-    val navController = rememberNavController()
-    TvingBottomBar(navController = navController)
+    TvingBottomBar()
 }
