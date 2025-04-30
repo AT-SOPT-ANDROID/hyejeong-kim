@@ -7,7 +7,9 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import org.sopt.at.R
 
 @Composable
 fun HistoryFab(
@@ -19,7 +21,8 @@ fun HistoryFab(
         containerColor = Color.White
     ) {
         Icon(
-            Icons.Filled.Add, "Add Series"
+            imageVector = Icons.Filled.Add,
+            contentDescription = stringResource(R.string.history_dialog_add)
         )
     }
 }
