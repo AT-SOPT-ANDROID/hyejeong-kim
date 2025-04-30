@@ -22,8 +22,8 @@ import org.sopt.at.core.navigation.BottomNavRoute
 
 @Composable
 fun TvingBottomBar(
-    modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     val screen = listOf<BottomNavRoute>(
         BottomNavRoute.Home,
