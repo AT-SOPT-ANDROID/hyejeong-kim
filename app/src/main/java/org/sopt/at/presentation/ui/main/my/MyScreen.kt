@@ -1,6 +1,5 @@
 package org.sopt.at.presentation.ui.main.my
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,11 +19,11 @@ import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.IntentKeys
-import org.sopt.at.presentation.ui.signin.SignInActivity
 
 @Composable
 fun MyScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToSignIn: () -> Unit
 ) {
     val context = LocalContext.current
     val autoLogin = AutoLogin(context)
@@ -50,10 +49,7 @@ fun MyScreen(
                 // 자동 로그인 정보 제거
                 autoLogin.logout()
                 // 로그인 뷰로 이동
-                val intent = Intent(context, SignInActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                context.startActivity(intent)
+                navigateToSignIn()
             },
             content = stringResource(R.string.my_logout_button)
         )
@@ -63,5 +59,7 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewMyScreen() {
-    MyScreen()
+    MyScreen(
+        navigateToSignIn = {}
+    )
 }

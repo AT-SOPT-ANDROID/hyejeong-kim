@@ -13,12 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +36,7 @@ import kotlinx.coroutines.launch
 import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
+import org.sopt.at.core.navigation.LocalNavController
 import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.core.util.noRippleClickable
@@ -45,10 +45,16 @@ import org.sopt.at.presentation.ui.main.MainActivity
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
-    signUpId: String = "",
-    signUpPw: String = "",
-    navigateToSignUp: () -> Unit = {}
+    navigateToSignUp: () -> Unit = {},
+    navigateToHome: () -> Unit = {},
+    showSnackbar: (String) -> Unit = {}
 ) {
+    val navController = LocalNavController.current
+
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+    val signUpId = savedStateHandle?.get<String>(IntentKeys.ID_KEY) ?: ""
+    val signUpPw = savedStateHandle?.get<String>(IntentKeys.PW_KEY) ?: ""
+
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
@@ -68,113 +74,109 @@ fun SignInScreen(
     val isValidProfile =
         id == signUpId && password == signUpPw && signUpId.isNotBlank() && signUpPw.isNotBlank()
 
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(color = Color.Black)
-                .padding(innerPadding)
-                .padding(top = 100.dp)
-                .padding(horizontal = 15.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.sign_in_title),
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+    val invalidUserMsg = stringResource(R.string.sign_in_invalid)
 
-            // 아이디 입력 창
-            IdTextField(
-                id = id,
-                onIdChange = { id = it },
-                modifier = Modifier
-                    .padding(top = 20.dp)
-            )
-
-            // 비밀번호 입력 창
-            PasswordTextField(
-                password = password,
-                onPasswordChange = { password = it },
-                showPassword = showPassword,
-                onTogglePasswordVisibility = { showPassword = !showPassword },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp)
-            )
-
-            // 로그인하기 버튼
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp)
-                    .background(loginButtonColor, RoundedCornerShape(5.dp))
-                    .padding(vertical = 14.dp)
-                    .noRippleClickable {
-                        if (isValidProfile) {
-                            // 회원 정보가 유효 하지 않을 시 스낵바
-                            scope.launch {
-                                snackbarHostState.showSnackbar("회원 정보가 유효하지 않습니다.")
-                            }
-                        } else { // 회원가입 정보 일치 시
-                            // 자동 로그인 정보 저장
-                            autoLogin.saveLoginInfo(id, password)
-                            // MainActivity로 이동
-                            val intent = Intent(context, MainActivity::class.java).apply {
-                                flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
-                            context.startActivity(intent)
-                        }
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.button_sign_in),
-                    fontWeight = FontWeight.Bold,
-                    color = loginTextColor
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp)
-                    .padding(top = 35.dp)
-                    .height(IntrinsicSize.Min),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.button_find_id),
-                    color = Color.Gray
-                )
-                VerticalDivider(
-                    thickness = 1.dp,
-                    color = Color.Gray
-                )
-                Text(
-                    text = stringResource(R.string.button_find_pw),
-                    color = Color.Gray
-                )
-                VerticalDivider(
-                    thickness = 1.dp,
-                    color = Color.Gray
-                )
-                Text(
-                    text = stringResource(R.string.button_sign_up),
-                    color = Color.Gray,
-                    modifier = Modifier.clickable {
-                        navigateToSignUp()
-                    }
-                )
-            }
+    LaunchedEffect(Unit) {
+        if (autoLogin.isLoggedIn()) {
+            navigateToHome()
         }
     }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = Color.Black)
+            .padding(top = 100.dp)
+            .padding(horizontal = 15.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.sign_in_title),
+            color = Color.White,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        // 아이디 입력 창
+        IdTextField(
+            id = id,
+            onIdChange = { id = it },
+            modifier = Modifier
+                .padding(top = 20.dp)
+        )
+
+        // 비밀번호 입력 창
+        PasswordTextField(
+            password = password,
+            onPasswordChange = { password = it },
+            showPassword = showPassword,
+            onTogglePasswordVisibility = { showPassword = !showPassword },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)
+        )
+
+        // 로그인하기 버튼
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp)
+                .background(loginButtonColor, RoundedCornerShape(5.dp))
+                .padding(vertical = 14.dp)
+                .noRippleClickable {
+                    if (isValidProfile) {
+                        // 회원가입 정보 일치 시
+                        // 자동 로그인 정보 저장
+                        autoLogin.saveLoginInfo(id, password)
+                        navigateToHome()
+                    } else {
+                        // 회원 정보가 유효 하지 않을 시 스낵바
+                        showSnackbar(invalidUserMsg)
+                    }
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.button_sign_in),
+                fontWeight = FontWeight.Bold,
+                color = loginTextColor
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp)
+                .padding(top = 35.dp)
+                .height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.button_find_id),
+                color = Color.Gray
+            )
+            VerticalDivider(
+                thickness = 1.dp,
+                color = Color.Gray
+            )
+            Text(
+                text = stringResource(R.string.button_find_pw),
+                color = Color.Gray
+            )
+            VerticalDivider(
+                thickness = 1.dp,
+                color = Color.Gray
+            )
+            Text(
+                text = stringResource(R.string.button_sign_up),
+                color = Color.Gray,
+                modifier = Modifier.clickable {
+                    navigateToSignUp()
+                }
+            )
+        }
+    }
+
 }
 
 @Preview(showBackground = true)

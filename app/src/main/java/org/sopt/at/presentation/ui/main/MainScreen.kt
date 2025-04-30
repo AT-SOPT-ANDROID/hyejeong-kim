@@ -2,16 +2,20 @@ package org.sopt.at.presentation.ui.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
+import kotlinx.coroutines.launch
 import org.sopt.at.core.component.bottombar.TvingBottomBar
 import org.sopt.at.core.component.dialog.HistoryDialog
 import org.sopt.at.core.component.fab.HistoryFab
@@ -35,22 +39,34 @@ fun MainScreen(
 
     var showAddDialog by remember { mutableStateOf(false) }
 
+    // 스낵바
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    val showSnackbar: (String) -> Unit = { message ->
+        scope.launch {
+            snackbarHostState.showSnackbar(message)
+        }
+    }
+
     Scaffold(
         topBar = {
             if (currentRoute == BottomNavRoute.Home.route) {
                 TvingHomeTopBar(
                     navigateToMy = { navController.navigate(route = NavRoute.My.route) }
                 )
-            } else if (currentRoute == NavRoute.My.route) {
+            } else if (currentRoute == NavRoute.My.route || currentRoute == NavRoute.SignUp.route) {
                 TvingTopBar(
                     onBackClick = {
-                        navController.navigate(route = BottomNavRoute.Home.route)
+                        navController.popBackStack()
                     }
                 )
             }
         },
         bottomBar = {
-            TvingBottomBar()
+            if (currentRoute != NavRoute.SignUp.route && currentRoute != NavRoute.SignIn.route) {
+                TvingBottomBar()
+            }
         },
         floatingActionButton = {
             if (currentRoute == BottomNavRoute.History.route) {
@@ -60,12 +76,15 @@ fun MainScreen(
                     }
                 )
             }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
         NavGraph(
             modifier = Modifier.padding(innerPadding),
-            navController = navController,
-            historyViewModel = historyViewModel
+            historyViewModel = historyViewModel,
+            showSnackbar = showSnackbar
         )
     }
 

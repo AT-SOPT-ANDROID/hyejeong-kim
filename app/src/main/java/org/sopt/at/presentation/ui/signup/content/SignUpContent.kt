@@ -8,15 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,12 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
-import org.sopt.at.core.component.topbar.TvingTopBar
 
 @Composable
 fun SignUpContent(
@@ -42,12 +36,9 @@ fun SignUpContent(
     modifier: Modifier = Modifier,
     onNext: () -> Unit,
     onBack: () -> Unit,
+    showErrorSnackbar: (String) -> Unit
 ) {
     var showPassword by remember { mutableStateOf(value = false) }
-
-    // 스낵바
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
 
     val isIdStep = step == 1
 
@@ -59,113 +50,104 @@ fun SignUpContent(
         pw.matches(Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#\$%^&*])[a-zA-Z0-9~!@#\$%^&*]{8,15}$"))
     }
 
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
-        topBar = {
-            TvingTopBar(
-                onBackClick = onBack
-            )
-        }
-    ) { innerPadding ->
+    val invalidIdMsg = stringResource(R.string.sign_up_invalid_id)
+    val invalidPwMsg = stringResource(R.string.sign_up_invalid_pw)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black)
+            .padding(15.dp),
+    ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.Black)
-                .padding(innerPadding)
-                .padding(15.dp),
+                .padding(top = 15.dp)
+                .imePadding(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 15.dp)
-                    .imePadding(),
-                verticalArrangement = Arrangement.SpaceBetween
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    // 제목
-                    Text(
-                        text = if (isIdStep) stringResource(
-                            R.string.sign_up_id_input
-                        ) else
-                            stringResource(
-                                R.string.sign_up_pw_input
-                            ),
-                        color = Color.White,
-                        fontSize = 20.sp
-                    )
+                // 제목
+                Text(
+                    text = if (isIdStep) stringResource(
+                        R.string.sign_up_id_input
+                    ) else
+                        stringResource(
+                            R.string.sign_up_pw_input
+                        ),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
 
-                    when (step) {
-                        1 -> {
-                            // 아이디 입력 창
-                            Column {
-                                IdTextField(
-                                    id = id,
-                                    onIdChange = onIdChange,
-                                    modifier = Modifier
-                                        .padding(top = 20.dp)
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.Gray,
-                                            shape = RoundedCornerShape(5.dp)
-                                        )
-                                )
+                when (step) {
+                    1 -> {
+                        // 아이디 입력 창
+                        Column {
+                            IdTextField(
+                                id = id,
+                                onIdChange = onIdChange,
+                                modifier = Modifier
+                                    .padding(top = 20.dp)
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color.Gray,
+                                        shape = RoundedCornerShape(5.dp)
+                                    )
+                            )
 
-                                Text(
-                                    text = stringResource(R.string.sign_up_id_condition),
-                                    color = Color.Gray,
-                                    fontSize = 12.sp
-                                )
-                            }
-
+                            Text(
+                                text = stringResource(R.string.sign_up_id_condition),
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
                         }
 
-                        else -> {
-                            // 비밀번호 입력 창
-                            Column {
-                                PasswordTextField(
-                                    password = pw,
-                                    onPasswordChange = onPwChange,
-                                    showPassword = showPassword,
-                                    onTogglePasswordVisibility = { showPassword = !showPassword },
-                                    modifier = Modifier
-                                        .padding(top = 20.dp)
-                                        .border(1.dp, Color.Gray, shape = RoundedCornerShape(5.dp)),
-                                )
-
-                                Text(
-                                    text = stringResource(R.string.sign_up_pw_condition),
-                                    color = Color.Gray,
-                                    fontSize = 12.sp
-                                )
-                            }
-                        }
                     }
 
+                    else -> {
+                        // 비밀번호 입력 창
+                        Column {
+                            PasswordTextField(
+                                password = pw,
+                                onPasswordChange = onPwChange,
+                                showPassword = showPassword,
+                                onTogglePasswordVisibility = { showPassword = !showPassword },
+                                modifier = Modifier
+                                    .padding(top = 20.dp)
+                                    .border(1.dp, Color.Gray, shape = RoundedCornerShape(5.dp)),
+                            )
+
+                            Text(
+                                text = stringResource(R.string.sign_up_pw_condition),
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
                 }
 
-                // 다음 버튼
-                TvingButton(
-                    onClick = {
-                        // id가 유효할 경우 회원가입 비밀번호 뷰로 이동
-                        if (isValid) {
-                            onNext()
-                        } else {
-                            // id가 유효 하지 않을 시 스낵바
-                            scope.launch {
-                                snackbarHostState.showSnackbar(message = if (isIdStep) "ID가 유효하지 않습니다." else "비밀번호가 유효하지 않습니다.")
-                            }
-                        }
-                    },
-                    content = stringResource(R.string.button_next)
-                )
             }
+
+            // 다음 버튼
+            TvingButton(
+                onClick = {
+                    // id가 유효할 경우 회원가입 비밀번호 뷰로 이동
+                    if (isValid) {
+                        onNext()
+                    } else {
+                        // id가 유효 하지 않을 시 스낵바
+                        val message = if (isIdStep) invalidIdMsg else invalidPwMsg
+
+                        showErrorSnackbar(message)
+                    }
+                },
+                content = stringResource(R.string.button_next)
+            )
         }
     }
+
 }
 
 @Preview(showBackground = true)
@@ -179,5 +161,6 @@ private fun PreviewSignUpContent() {
         onPwChange = {},
         onNext = {},
         onBack = {},
+        showErrorSnackbar = {}
     )
 }
