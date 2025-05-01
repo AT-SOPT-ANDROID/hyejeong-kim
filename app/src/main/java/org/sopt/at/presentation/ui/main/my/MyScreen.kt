@@ -35,8 +35,8 @@ fun MyScreen(
 
     var logoutRequest by remember { mutableStateOf(false) }
 
-    if (logoutRequest) {
-        LaunchedEffect(Unit) {
+    LaunchedEffect(logoutRequest) {
+        if (logoutRequest) {
             // 자동 로그인 정보 제거
             autoLogin.logout()
             // 로그인 뷰로 이동
