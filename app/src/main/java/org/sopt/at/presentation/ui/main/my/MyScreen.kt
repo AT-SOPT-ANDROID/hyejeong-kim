@@ -7,6 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +33,17 @@ fun MyScreen(
     val context = LocalContext.current
     val autoLogin = AutoLogin(context)
 
+    var logoutRequest by remember { mutableStateOf(false) }
+
+    if (logoutRequest) {
+        LaunchedEffect(Unit) {
+            // 자동 로그인 정보 제거
+            autoLogin.logout()
+            // 로그인 뷰로 이동
+            navigateToSignIn()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,10 +62,7 @@ fun MyScreen(
         // 로그아웃 버튼
         TvingButton(
             onClick = {
-                // 자동 로그인 정보 제거
-                autoLogin.logout()
-                // 로그인 뷰로 이동
-                navigateToSignIn()
+                logoutRequest = true
             },
             content = stringResource(R.string.my_logout_button)
         )
