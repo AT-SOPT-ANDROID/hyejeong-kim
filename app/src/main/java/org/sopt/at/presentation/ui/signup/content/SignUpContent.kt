@@ -25,6 +25,7 @@ import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun SignUpContent(
@@ -55,7 +56,7 @@ fun SignUpContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Black)
+            .background(color = TvingTheme.colors.BasicBlack)
             .padding(15.dp),
     ) {
 
@@ -77,8 +78,8 @@ fun SignUpContent(
                         stringResource(
                             R.string.sign_up_pw_input
                         ),
-                    color = Color.White,
-                    fontSize = 20.sp
+                    color = TvingTheme.colors.BasicWhite,
+                    style = TvingTheme.typography.subtitle
                 )
 
                 when (step) {
@@ -92,15 +93,15 @@ fun SignUpContent(
                                     .padding(top = 20.dp)
                                     .border(
                                         width = 1.dp,
-                                        color = Color.Gray,
+                                        color = TvingTheme.colors.Gray2,
                                         shape = RoundedCornerShape(5.dp)
                                     )
                             )
 
                             Text(
                                 text = stringResource(R.string.sign_up_id_condition),
-                                color = Color.Gray,
-                                fontSize = 12.sp
+                                color = TvingTheme.colors.Gray2,
+                                style = TvingTheme.typography.caption
                             )
                         }
 
@@ -121,8 +122,8 @@ fun SignUpContent(
 
                             Text(
                                 text = stringResource(R.string.sign_up_pw_condition),
-                                color = Color.Gray,
-                                fontSize = 12.sp
+                                color = TvingTheme.colors.Gray2,
+                                style = TvingTheme.typography.caption
                             )
                         }
                     }

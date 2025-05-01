@@ -22,6 +22,7 @@ import org.sopt.at.R
 import org.sopt.at.core.component.list.HistorySeriesItem
 import org.sopt.at.data.local.Series
 import org.sopt.at.presentation.ui.main.history.HistoryViewModel
+import org.sopt.at.ui.theme.TvingTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -38,8 +39,8 @@ fun HistoryContent(
     ) {
         Text(
             text = stringResource(R.string.history_series_list),
-            color = Color.White,
-            fontSize = 20.sp
+            color = TvingTheme.colors.BasicWhite,
+            style = TvingTheme.typography.title
         )
         LazyColumn {
             itemsIndexed(seriesList) { index, series ->

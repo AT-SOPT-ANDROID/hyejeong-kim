@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import org.sopt.at.R
+import org.sopt.at.ui.theme.TvingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +42,7 @@ fun HistoryDialog(
                 .fillMaxWidth()
                 .wrapContentHeight(),
             shape = RoundedCornerShape(12.dp),
-            color = Color.White
+            color = TvingTheme.colors.BasicWhite
         ) {
             Column {
                 Spacer(
@@ -56,8 +57,7 @@ fun HistoryDialog(
                         .fillMaxWidth()
                         .wrapContentSize()
                         .padding(vertical = 8.dp),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    style = TvingTheme.typography.body
                 )
                 Spacer(
                     modifier = Modifier
@@ -73,12 +73,12 @@ fun HistoryDialog(
                         .padding(horizontal = 20.dp),
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black
+                        containerColor = TvingTheme.colors.BasicBlack
                     )
                 ) {
                     Text(
                         text = stringResource(if (isAddDialog) R.string.history_dialog_add else R.string.history_dialog_delete),
-                        fontSize = 16.sp
+                        style = TvingTheme.typography.body
                     )
                 }
                 Spacer(

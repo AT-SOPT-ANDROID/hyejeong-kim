@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingTopBar(
@@ -26,7 +27,7 @@ fun TvingTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = Color.Black)
+            .background(color = TvingTheme.colors.BasicBlack)
             .padding(15.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -40,7 +41,7 @@ fun TvingTopBar(
                 imageVector = Icons.Filled.ArrowBackIosNew,
                 contentDescription = "뒤로가기",
                 modifier = Modifier.fillMaxSize(),
-                tint = Color.White
+                tint = TvingTheme.colors.BasicWhite
             )
         }
     }

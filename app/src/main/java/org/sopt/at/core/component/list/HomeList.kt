@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.at.R
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun HomeList(
@@ -42,13 +43,13 @@ fun HomeList(
         ) {
             Text(
                 text = title,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
+                color = TvingTheme.colors.BasicWhite,
+                style = TvingTheme.typography.subtitle
             )
             Text(
                 text = stringResource(R.string.home_more),
-                color = Color.Gray,
-                fontSize = 12.sp
+                color = TvingTheme.colors.Gray2,
+                style = TvingTheme.typography.caption
             )
         }
 

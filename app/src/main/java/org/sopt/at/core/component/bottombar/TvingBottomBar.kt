@@ -18,6 +18,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import org.sopt.at.core.navigation.BottomNavRoute
 import org.sopt.at.core.navigation.LocalNavController
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingBottomBar(
@@ -37,7 +38,7 @@ fun TvingBottomBar(
     val currentRoute = navBackStackEntry?.destination?.route
 
     BottomAppBar(
-        containerColor = Color.Black
+        containerColor = TvingTheme.colors.BasicBlack
     ) {
         screen.forEach { item ->
             NavigationBarItem(
@@ -62,10 +63,10 @@ fun TvingBottomBar(
                 },
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = Color.Transparent,
-                    unselectedIconColor = Color.Gray,
-                    unselectedTextColor = Color.Gray,
-                    selectedIconColor = Color.White,
-                    selectedTextColor = Color.White
+                    unselectedIconColor = TvingTheme.colors.Gray2,
+                    unselectedTextColor = TvingTheme.colors.Gray2,
+                    selectedIconColor = TvingTheme.colors.BasicWhite,
+                    selectedTextColor = TvingTheme.colors.BasicWhite
                 )
             )
         }

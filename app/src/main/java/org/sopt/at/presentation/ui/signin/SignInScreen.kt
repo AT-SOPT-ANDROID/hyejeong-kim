@@ -1,6 +1,5 @@
 package org.sopt.at.presentation.ui.signin
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
 import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
@@ -40,7 +38,7 @@ import org.sopt.at.core.navigation.LocalNavController
 import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.core.util.noRippleClickable
-import org.sopt.at.presentation.ui.main.MainActivity
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun SignInScreen(
@@ -68,8 +66,8 @@ fun SignInScreen(
 
     // 로그인 버튼 색깔
     val isFormFilled = id.isNotBlank() && password.isNotBlank()
-    val loginButtonColor = if (isFormFilled) Color(0xFFFF143C) else Color(0xFF404040)
-    val loginTextColor = if (isFormFilled) Color.White else Color.Gray
+    val loginButtonColor = if (isFormFilled) TvingTheme.colors.BrandRed else TvingTheme.colors.Gray4
+    val loginTextColor = if (isFormFilled) TvingTheme.colors.BasicWhite else TvingTheme.colors.Gray2
 
     val isValidProfile =
         id == signUpId && password == signUpPw && signUpId.isNotBlank() && signUpPw.isNotBlank()
@@ -91,9 +89,8 @@ fun SignInScreen(
     ) {
         Text(
             text = stringResource(R.string.sign_in_title),
-            color = Color.White,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            color = TvingTheme.colors.BasicWhite,
+            style = TvingTheme.typography.title
         )
 
         // 아이디 입력 창
@@ -137,7 +134,7 @@ fun SignInScreen(
         ) {
             Text(
                 text = stringResource(R.string.button_sign_in),
-                fontWeight = FontWeight.Bold,
+                style = TvingTheme.typography.button,
                 color = loginTextColor
             )
         }
@@ -153,23 +150,26 @@ fun SignInScreen(
         ) {
             Text(
                 text = stringResource(R.string.button_find_id),
-                color = Color.Gray
+                color = TvingTheme.colors.Gray2,
+                style = TvingTheme.typography.caption
             )
             VerticalDivider(
                 thickness = 1.dp,
-                color = Color.Gray
+                color = TvingTheme.colors.Gray2,
             )
             Text(
                 text = stringResource(R.string.button_find_pw),
-                color = Color.Gray
+                color = TvingTheme.colors.Gray2,
+                style = TvingTheme.typography.caption
             )
             VerticalDivider(
                 thickness = 1.dp,
-                color = Color.Gray
+                color = TvingTheme.colors.Gray2
             )
             Text(
                 text = stringResource(R.string.button_sign_up),
-                color = Color.Gray,
+                color = TvingTheme.colors.Gray2,
+                style = TvingTheme.typography.caption,
                 modifier = Modifier.clickable {
                     navigateToSignUp()
                 }
