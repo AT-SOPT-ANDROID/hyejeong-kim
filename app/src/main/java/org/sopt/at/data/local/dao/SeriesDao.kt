@@ -1,4 +1,4 @@
-package org.sopt.at.data.dao
+package org.sopt.at.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import org.sopt.at.data.local.Series
+import org.sopt.at.data.local.entity.Series
 
 @Dao
 interface SeriesDao {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.at.data.local.Series
+import org.sopt.at.data.local.entity.Series
 import org.sopt.at.data.repository.SeriesRepository
 import javax.inject.Inject
 

@@ -14,13 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.sopt.at.R
 import org.sopt.at.core.component.list.HistorySeriesItem
-import org.sopt.at.data.local.Series
+import org.sopt.at.data.local.entity.Series
 import org.sopt.at.presentation.ui.main.history.HistoryViewModel
 import org.sopt.at.ui.theme.TvingTheme
 

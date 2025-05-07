@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.sopt.at.data.dao.SeriesDao
-import org.sopt.at.data.local.Series
+import org.sopt.at.data.local.dao.SeriesDao
+import org.sopt.at.data.local.entity.Series
 
 @Database(entities = [Series::class], version = 1, exportSchema = false)
 abstract class TvingDatabase : RoomDatabase() {
