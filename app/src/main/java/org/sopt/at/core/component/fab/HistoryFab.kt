@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.at.R
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun HistoryFab(
@@ -18,7 +19,7 @@ fun HistoryFab(
 ) {
     SmallFloatingActionButton(
         onClick = onFabClick,
-        containerColor = Color.White
+        containerColor = TvingTheme.colors.BasicWhite
     ) {
         Icon(
             imageVector = Icons.Filled.Add,

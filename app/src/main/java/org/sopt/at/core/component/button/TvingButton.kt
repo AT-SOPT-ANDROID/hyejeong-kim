@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.at.core.util.noRippleClickable
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingButton(
@@ -22,16 +23,16 @@ fun TvingButton(
     onClick: () -> Unit = {}
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .size(50.dp)
             .background(
-                color = Color.Black,
+                color = TvingTheme.colors.BasicBlack,
                 shape = RoundedCornerShape(10.dp)
             )
             .border(
                 width = 1.dp,
-                color = Color.Gray,
+                color = TvingTheme.colors.Gray2,
                 shape = RoundedCornerShape(10.dp)
             )
             .noRippleClickable(onClick),
@@ -39,8 +40,8 @@ fun TvingButton(
     ) {
         Text(
             text = content,
-            fontSize = 16.sp,
-            color = Color.LightGray
+            color = TvingTheme.colors.Gray1,
+            style = TvingTheme.typography.body
         )
     }
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.at.R
 import org.sopt.at.data.local.Series
+import org.sopt.at.ui.theme.TvingTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -55,8 +56,8 @@ fun HistorySeriesItem(
 
         Text(
             text = "${series.title} ${series.id}",
-            color = Color.White,
-            fontSize = 18.sp
+            color = TvingTheme.colors.BasicWhite,
+            style = TvingTheme.typography.body
         )
     }
 }

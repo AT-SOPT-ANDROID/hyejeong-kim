@@ -16,16 +16,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.sopt.at.R
 import org.sopt.at.core.component.list.HistorySeriesItem
 import org.sopt.at.data.local.Series
 import org.sopt.at.presentation.ui.main.history.HistoryViewModel
+import org.sopt.at.ui.theme.TvingTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HistoryContent(
     modifier: Modifier = Modifier,
-    seriesList: List<Series>,
+    seriesList: ImmutableList<Series>,
     showDeleteDialog: (Series) -> Unit
 ) {
     Column(
@@ -36,8 +39,8 @@ fun HistoryContent(
     ) {
         Text(
             text = stringResource(R.string.history_series_list),
-            color = Color.White,
-            fontSize = 20.sp
+            color = TvingTheme.colors.BasicWhite,
+            style = TvingTheme.typography.title
         )
         LazyColumn {
             itemsIndexed(seriesList) { index, series ->
@@ -57,7 +60,7 @@ fun HistoryContent(
 private fun PreviewHistoryContent() {
     val viewModel: HistoryViewModel = hiltViewModel()
     HistoryContent(
-        seriesList = emptyList(),
+        seriesList = persistentListOf(),
         showDeleteDialog = viewModel::showDeleteDialog
     )
 }

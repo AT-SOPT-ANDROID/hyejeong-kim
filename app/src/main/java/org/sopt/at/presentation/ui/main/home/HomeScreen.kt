@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import org.sopt.at.R
 import org.sopt.at.core.component.list.HomeList
 import org.sopt.at.core.component.list.HomeListCardItem
+import org.sopt.at.ui.theme.TvingTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -58,7 +59,7 @@ fun HomeScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color.Black),
+            .background(color = TvingTheme.colors.BasicBlack),
         state = listState
     ) {
         stickyHeader {
@@ -66,8 +67,8 @@ fun HomeScreen(
                 selectedTabIndex = selectedTabIndex.coerceAtLeast(0),
                 modifier = Modifier
                     .fillMaxWidth(),
-                backgroundColor = Color.Black,
-                contentColor = Color.White,
+                backgroundColor = TvingTheme.colors.BasicBlack,
+                contentColor = TvingTheme.colors.BasicWhite,
                 indicator = {}
             ) {
                 tabSections.forEachIndexed { index, resId ->
@@ -88,8 +89,8 @@ fun HomeScreen(
                         ) {
                             Text(
                                 text = stringResource(id = resId),
-                                color = if (selectedTabIndex == index) Color.White else Color.Gray,
-                                fontSize = 14.sp,
+                                color = if (selectedTabIndex == index) TvingTheme.colors.BasicWhite else TvingTheme.colors.Gray2,
+                                style = TvingTheme.typography.button,
                                 maxLines = 1
                             )
                         }

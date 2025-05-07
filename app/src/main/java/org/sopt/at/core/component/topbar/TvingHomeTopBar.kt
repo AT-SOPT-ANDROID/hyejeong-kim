@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.at.R
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingHomeTopBar(
@@ -25,7 +26,7 @@ fun TvingHomeTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color.Black)
+            .background(color = TvingTheme.colors.BasicBlack)
             .padding(15.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

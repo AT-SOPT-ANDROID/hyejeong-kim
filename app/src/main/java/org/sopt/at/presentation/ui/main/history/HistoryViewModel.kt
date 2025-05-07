@@ -3,6 +3,9 @@ package org.sopt.at.presentation.ui.main.history
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +20,8 @@ class HistoryViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _seriesList = MutableStateFlow<List<Series>>(emptyList())
-    val seriesList: StateFlow<List<Series>> = _seriesList.asStateFlow()
+    private val _seriesList = MutableStateFlow<ImmutableList<Series>>(persistentListOf())
+    val seriesList: StateFlow<ImmutableList<Series>> = _seriesList.asStateFlow()
 
     private val _showDeleteDialog = MutableStateFlow<Boolean>(false)
     val showDeleteDialog: StateFlow<Boolean> = _showDeleteDialog.asStateFlow()
@@ -33,7 +36,7 @@ class HistoryViewModel @Inject constructor(
     private fun setSeriesList() {
         viewModelScope.launch {
             seriesRepository.getAllSeriesStream().collect { series ->
-                _seriesList.value = series
+                _seriesList.value = series.toImmutableList()
             }
         }
     }

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import org.sopt.at.R
+import org.sopt.at.ui.theme.TvingTheme
 
 // 비밀번호 TextField 함수
 @Composable
@@ -34,7 +35,12 @@ fun PasswordTextField(
     TextField(
         value = password,
         onValueChange = onPasswordChange,
-        placeholder = { Text(text = stringResource(R.string.textfield_pw)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.textfield_pw),
+                style = TvingTheme.typography.body
+            )
+        },
         visualTransformation = if (showPassword) {
             VisualTransformation.None
         } else {
@@ -46,24 +52,24 @@ fun PasswordTextField(
                 Icon(
                     imageVector = if (showPassword) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                     contentDescription = if (showPassword) "Hide password" else "Show password",
-                    tint = Color.Gray
+                    tint = TvingTheme.colors.Gray2
                 )
             }
         },
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color(0xFF262626),
-            unfocusedContainerColor = Color(0xFF262626),
+            focusedContainerColor = TvingTheme.colors.Gray4,
+            unfocusedContainerColor = TvingTheme.colors.Gray4,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            cursorColor = Color.White,
-            focusedPlaceholderColor = Color.Gray,
-            unfocusedPlaceholderColor = Color.Gray
+            cursorColor = TvingTheme.colors.BasicWhite,
+            focusedPlaceholderColor = TvingTheme.colors.Gray2,
+            unfocusedPlaceholderColor = TvingTheme.colors.Gray2
         ),
         textStyle = TextStyle(
-            color = Color.White
+            color = TvingTheme.colors.BasicWhite
         ),
         singleLine = true
     )

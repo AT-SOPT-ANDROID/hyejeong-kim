@@ -17,12 +17,15 @@
 
     <!-- SignIn -->
     <string name="sign_in_title">TVING ID 로그인</string>
+    <string name="sign_in_invalid">"회원 정보가 유효하지 않습니다."</string>
     
     <!-- SignUp-->
     <string name="sign_up_id_input">아이디를 입력해주세요.</string>
     <string name="sign_up_id_condition">영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리</string>
     <string name="sign_up_pw_input">비밀번호를 입력해주세요.</string>
     <string name="sign_up_pw_condition">영문, 숫자, 특수문자(~!@#$%^) 조합 8~15자리</string>
+    <string name="sign_up_invalid_id">ID가 유효하지 않습니다.</string>
+    <string name="sign_up_invalid_pw">비밀번호가 유효하지 않습니다.</string>"
     
     <!-- My -->
     <string name="my_logout_button">로그아웃</string>

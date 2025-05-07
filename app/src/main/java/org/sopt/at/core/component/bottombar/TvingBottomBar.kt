@@ -14,17 +14,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.navigation.BottomNavRoute
+import org.sopt.at.core.navigation.LocalNavController
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingBottomBar(
-    navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val navController = LocalNavController.current
+
     val screen = listOf<BottomNavRoute>(
         BottomNavRoute.Home,
         BottomNavRoute.Shorts,
@@ -37,7 +38,7 @@ fun TvingBottomBar(
     val currentRoute = navBackStackEntry?.destination?.route
 
     BottomAppBar(
-        containerColor = Color.Black
+        containerColor = TvingTheme.colors.BasicBlack
     ) {
         screen.forEach { item ->
             NavigationBarItem(
@@ -62,10 +63,10 @@ fun TvingBottomBar(
                 },
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = Color.Transparent,
-                    unselectedIconColor = Color.Gray,
-                    unselectedTextColor = Color.Gray,
-                    selectedIconColor = Color.White,
-                    selectedTextColor = Color.White
+                    unselectedIconColor = TvingTheme.colors.Gray2,
+                    unselectedTextColor = TvingTheme.colors.Gray2,
+                    selectedIconColor = TvingTheme.colors.BasicWhite,
+                    selectedTextColor = TvingTheme.colors.BasicWhite
                 )
             )
         }
@@ -75,6 +76,5 @@ fun TvingBottomBar(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewTvingBottomBar() {
-    val navController = rememberNavController()
-    TvingBottomBar(navController = navController)
+    TvingBottomBar()
 }

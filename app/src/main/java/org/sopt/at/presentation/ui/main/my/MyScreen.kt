@@ -1,6 +1,5 @@
 package org.sopt.at.presentation.ui.main.my
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,14 +24,25 @@ import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.IntentKeys
-import org.sopt.at.presentation.ui.signin.SignInActivity
 
 @Composable
 fun MyScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToSignIn: () -> Unit
 ) {
     val context = LocalContext.current
     val autoLogin = AutoLogin(context)
+
+    var logoutRequest by remember { mutableStateOf(false) }
+
+    LaunchedEffect(logoutRequest) {
+        if (logoutRequest) {
+            // 자동 로그인 정보 제거
+            autoLogin.logout()
+            // 로그인 뷰로 이동
+            navigateToSignIn()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -47,13 +62,7 @@ fun MyScreen(
         // 로그아웃 버튼
         TvingButton(
             onClick = {
-                // 자동 로그인 정보 제거
-                autoLogin.logout()
-                // 로그인 뷰로 이동
-                val intent = Intent(context, SignInActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                context.startActivity(intent)
+                logoutRequest = true
             },
             content = stringResource(R.string.my_logout_button)
         )
@@ -63,5 +72,7 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewMyScreen() {
-    MyScreen()
+    MyScreen(
+        navigateToSignIn = {}
+    )
 }
