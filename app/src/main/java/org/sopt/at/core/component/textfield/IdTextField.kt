@@ -20,6 +20,7 @@ import org.sopt.at.ui.theme.TvingTheme
 fun IdTextField(
     id: String,
     onIdChange: (String) -> Unit,
+    placeholderText: String,
     modifier: Modifier = Modifier
 ) {
     TextField(
@@ -27,7 +28,7 @@ fun IdTextField(
         onValueChange = onIdChange,
         placeholder = {
             Text(
-                text = stringResource(R.string.textfield_id),
+                text = placeholderText,
                 style = TvingTheme.typography.body
             )
         },

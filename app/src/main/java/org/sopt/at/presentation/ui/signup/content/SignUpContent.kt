@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.component.textfield.IdTextField
@@ -34,6 +33,8 @@ fun SignUpContent(
     onIdChange: (String) -> Unit = {},
     pw: String = "",
     onPwChange: (String) -> Unit = {},
+    nickname: String = "",
+    onNicknameChange: (String) -> Unit = {},
     modifier: Modifier = Modifier,
     onNext: () -> Unit,
     onBack: () -> Unit,
@@ -41,20 +42,18 @@ fun SignUpContent(
 ) {
     var showPassword by remember { mutableStateOf(value = false) }
 
-    val isIdStep = step == 1
-
-    val isValid = if (isIdStep) {
-        // id 유효성 검사: 영문 소문자 또는 영문 소문자, 숫자 조합 6~12자리
-        id.matches(Regex("^(?=.*[a-z])[a-z0-9]{6,12}$"))
-    } else {
-        // pw 유효성 검사: 영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15자리
-        pw.matches(Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#\$%^&*])[a-zA-Z0-9~!@#\$%^&*]{8,15}$"))
+    val isValid = when (step) {
+        1 -> nickname.matches(Regex("^[가-힣a-zA-Z0-9]{1,20}$"))
+        2 -> id.matches(Regex("^[A-Za-z0-9]{8,20}$"))
+        else -> pw.matches(Regex("^[A-Za-z0-9]{8,20}$"))
     }
 
+    val invalidNicknameMsg = stringResource(R.string.sign_up_invalid_nickname)
     val invalidIdMsg = stringResource(R.string.sign_up_invalid_id)
     val invalidPwMsg = stringResource(R.string.sign_up_invalid_pw)
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = TvingTheme.colors.BasicBlack)
             .padding(15.dp),
@@ -72,23 +71,47 @@ fun SignUpContent(
             ) {
                 // 제목
                 Text(
-                    text = if (isIdStep) stringResource(
-                        R.string.sign_up_id_input
-                    ) else
-                        stringResource(
-                            R.string.sign_up_pw_input
-                        ),
+                    text = when (step) {
+                        1 -> stringResource(R.string.sign_up_nickname_input)
+                        2 -> stringResource(R.string.sign_up_id_input)
+                        else -> stringResource(R.string.sign_up_pw_input)
+                    },
                     color = TvingTheme.colors.BasicWhite,
                     style = TvingTheme.typography.subtitle
                 )
 
                 when (step) {
                     1 -> {
+                        // 닉네임 입력 창
+                        Column {
+                            IdTextField(
+                                id = nickname,
+                                onIdChange = onNicknameChange,
+                                placeholderText = stringResource(R.string.textfield_nickname),
+                                modifier = Modifier
+                                    .padding(top = 20.dp)
+                                    .border(
+                                        width = 1.dp,
+                                        color = TvingTheme.colors.Gray2,
+                                        shape = RoundedCornerShape(5.dp)
+                                    )
+                            )
+
+                            Text(
+                                text = stringResource(R.string.sign_up_nickname_condition),
+                                color = TvingTheme.colors.Gray2,
+                                style = TvingTheme.typography.caption
+                            )
+                        }
+                    }
+
+                    2 -> {
                         // 아이디 입력 창
                         Column {
                             IdTextField(
                                 id = id,
                                 onIdChange = onIdChange,
+                                placeholderText = stringResource(R.string.textfield_id),
                                 modifier = Modifier
                                     .padding(top = 20.dp)
                                     .border(
@@ -104,7 +127,6 @@ fun SignUpContent(
                                 style = TvingTheme.typography.caption
                             )
                         }
-
                     }
 
                     else -> {
@@ -128,19 +150,19 @@ fun SignUpContent(
                         }
                     }
                 }
-
             }
 
             // 다음 버튼
             TvingButton(
                 onClick = {
-                    // id가 유효할 경우 회원가입 비밀번호 뷰로 이동
                     if (isValid) {
                         onNext()
                     } else {
-                        // id가 유효 하지 않을 시 스낵바
-                        val message = if (isIdStep) invalidIdMsg else invalidPwMsg
-
+                        val message = when (step) {
+                            1 -> invalidNicknameMsg
+                            2 -> invalidIdMsg
+                            else -> invalidPwMsg
+                        }
                         showErrorSnackbar(message)
                     }
                 },
@@ -148,7 +170,6 @@ fun SignUpContent(
             )
         }
     }
-
 }
 
 @Preview(showBackground = true)

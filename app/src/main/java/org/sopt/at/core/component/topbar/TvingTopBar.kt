@@ -22,7 +22,7 @@ import org.sopt.at.ui.theme.TvingTheme
 @Composable
 fun TvingTopBar(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -52,6 +52,6 @@ fun TvingTopBar(
 @Composable
 private fun PreviewTvingTopBar() {
     TvingTopBar(
-
+        onBackClick = {}
     )
 }
