@@ -6,16 +6,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.sopt.at.presentation.ui.main.history.HistoryScreen
-import org.sopt.at.presentation.ui.main.history.HistoryViewModel
-import org.sopt.at.presentation.ui.main.home.HomeScreen
-import org.sopt.at.presentation.ui.main.live.LiveScreen
-import org.sopt.at.presentation.ui.main.my.MyScreen
-import org.sopt.at.presentation.ui.main.search.SearchScreen
-import org.sopt.at.presentation.ui.main.shorts.ShortsScreen
-import org.sopt.at.presentation.ui.signin.SignInScreen
-import org.sopt.at.presentation.ui.signup.SignUpScreen
-import org.sopt.at.presentation.ui.splash.SplashScreen
+import org.sopt.at.feature.main.history.HistoryScreen
+import org.sopt.at.feature.main.history.HistoryViewModel
+import org.sopt.at.feature.main.home.HomeScreen
+import org.sopt.at.feature.main.live.LiveScreen
+import org.sopt.at.feature.main.my.MyScreen
+import org.sopt.at.feature.main.search.SearchScreen
+import org.sopt.at.feature.main.shorts.ShortsScreen
+import org.sopt.at.feature.signin.SignInScreen
+import org.sopt.at.feature.signup.SignUpScreen
+import org.sopt.at.feature.splash.SplashScreen
 
 @Composable
 fun NavGraph(
