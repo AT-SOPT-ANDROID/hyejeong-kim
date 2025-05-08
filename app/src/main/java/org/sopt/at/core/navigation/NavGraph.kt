@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.sopt.at.feature.editnickname.EditNicknameScreen
 import org.sopt.at.feature.history.HistoryScreen
 import org.sopt.at.feature.history.HistoryViewModel
 import org.sopt.at.feature.home.HomeScreen
@@ -87,6 +88,9 @@ fun NavGraph(
         }
         composable(route = NavRoute.My.route) {
             MyScreen(
+                navigateToEditNickname = {
+                    navController.navigate(NavRoute.EditNickname.route)
+                },
                 navigateToSignIn = {
                     navController.navigate(NavRoute.SignIn.route) {
                         popUpTo(0) {
@@ -95,6 +99,19 @@ fun NavGraph(
                         launchSingleTop = true
                     }
                 }
+            )
+        }
+        composable(route = NavRoute.EditNickname.route) {
+            EditNicknameScreen(
+                navigateToMy = {
+                    navController.navigate(NavRoute.My.route) {
+                        popUpTo(0) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
+                showSnackbar = showSnackbar
             )
         }
     }

@@ -12,17 +12,17 @@ import kotlinx.coroutines.launch
 import org.sopt.at.data.local.AuthPreferences
 import org.sopt.at.data.model.BaseState
 import org.sopt.at.data.model.response.MyNicknameResponse
-import org.sopt.at.data.model.response.SignInResponse
 import org.sopt.at.data.repository.MainRepository
-import org.sopt.at.feature.signin.SignInEffect
 import javax.inject.Inject
 
 sealed class MyEvent {
-    object OnLogoutClick: MyEvent()
+    object OnLogoutClick : MyEvent()
+    object onEditNicknameClick : MyEvent()
 }
 
 sealed class MyEffect {
     object NavigateToSignIn : MyEffect()
+    object NavigateToEditNickname : MyEffect()
 }
 
 @HiltViewModel
@@ -41,13 +41,20 @@ class MyViewModel @Inject constructor(
     val nickname: StateFlow<String?> = _nickname
 
     fun sendEvent(event: MyEvent) {
-        when(event) {
+        when (event) {
             MyEvent.OnLogoutClick -> logout()
+            MyEvent.onEditNicknameClick -> onEditNicknameClick()
         }
     }
 
     init {
         getMyNickname()
+    }
+
+    private fun onEditNicknameClick() {
+        viewModelScope.launch {
+            _effect.send(MyEffect.NavigateToEditNickname)
+        }
     }
 
     private fun logout() {
@@ -61,11 +68,12 @@ class MyViewModel @Inject constructor(
         viewModelScope.launch {
             authPreferences.userId.collect { token ->
                 repository.getMyNickname(token).collect { result ->
-                    when(result) {
+                    when (result) {
                         is BaseState.Error -> {}
                         is BaseState.Success -> {
                             _nickname.value = result.data.data.nickname
                         }
+
                         BaseState.Idle -> _uiState.value = BaseState.Idle
                     }
                 }

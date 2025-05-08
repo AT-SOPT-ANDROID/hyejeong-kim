@@ -55,7 +55,10 @@ fun MainScreen(
                 TvingHomeTopBar(
                     navigateToMy = { navController.navigate(route = NavRoute.My.route) }
                 )
-            } else if (currentRoute == NavRoute.My.route) {
+            } else if (
+                currentRoute == NavRoute.My.route ||
+                currentRoute == NavRoute.EditNickname.route
+            ) {
                 TvingTopBar(
                     onBackClick = {
                         navController.popBackStack()
@@ -66,7 +69,9 @@ fun MainScreen(
         bottomBar = {
             if (currentRoute != NavRoute.SignUp.route &&
                 currentRoute != NavRoute.SignIn.route &&
-                currentRoute != NavRoute.Splash.route
+                currentRoute != NavRoute.Splash.route &&
+                currentRoute != NavRoute.My.route &&
+                currentRoute != NavRoute.EditNickname.route
             ) {
                 TvingBottomBar(
                     navController = navController

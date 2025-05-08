@@ -10,6 +10,7 @@
     <string name="button_find_id">아이디 찾기</string>
     <string name="button_find_pw">비밀번호 찾기</string>
     <string name="button_next">다음</string>
+    <string name="button_edit_nickname">닉네임 변경하기</string>
 
     <!-- TextField -->
     <string name="textfield_nickname">닉네임</string>
@@ -41,6 +42,9 @@
 
     <!-- Search -->
     <string name="search_keyword_input">검색어를 입력해주세요.</string>
+
+    <!-- EditNickname -->
+    <string name="edit_nickname_input">변경할 닉네임을 입력해주세요.</string>
 
     <!-- History -->
     <string name="history_series_list">찜한 목록</string>

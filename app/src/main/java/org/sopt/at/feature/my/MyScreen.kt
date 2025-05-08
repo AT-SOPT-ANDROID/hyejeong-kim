@@ -3,7 +3,9 @@ package org.sopt.at.feature.my
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,22 +26,24 @@ import org.sopt.at.core.component.button.TvingButton
 
 @Composable
 fun MyScreen(
+    navigateToSignIn: () -> Unit,
+    navigateToEditNickname: () -> Unit,
     modifier: Modifier = Modifier,
-    navigateToSignIn: () -> Unit
+    viewModel: MyViewModel = hiltViewModel()
 ) {
-    val viewModel: MyViewModel = hiltViewModel()
     val nickname by viewModel.nickname.collectAsState()
     val effect = viewModel.effect.collectAsStateWithLifecycle(null)
 
     LaunchedEffect(effect.value) {
         when (effect.value) {
             MyEffect.NavigateToSignIn -> navigateToSignIn()
-            else -> {}
+            MyEffect.NavigateToEditNickname -> navigateToEditNickname()
+            null -> {}
         }
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = Color.Black)
             .padding(15.dp),
@@ -53,13 +57,25 @@ fun MyScreen(
             modifier = Modifier.padding(top = 30.dp)
         )
 
-        // 로그아웃 버튼
-        TvingButton(
-            onClick = {
-                viewModel.sendEvent(MyEvent.OnLogoutClick)
-            },
-            content = stringResource(R.string.my_logout_button)
-        )
+        Column {
+            // 닉네임 변경 버튼
+            TvingButton(
+                onClick = {
+                    viewModel.sendEvent(MyEvent.onEditNicknameClick)
+                },
+                content = stringResource(R.string.button_edit_nickname)
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // 로그아웃 버튼
+            TvingButton(
+                onClick = {
+                    viewModel.sendEvent(MyEvent.OnLogoutClick)
+                },
+                content = stringResource(R.string.my_logout_button)
+            )
+        }
     }
 }
 
@@ -67,6 +83,7 @@ fun MyScreen(
 @Composable
 private fun PreviewMyScreen() {
     MyScreen(
+        navigateToEditNickname = {},
         navigateToSignIn = {}
     )
 }

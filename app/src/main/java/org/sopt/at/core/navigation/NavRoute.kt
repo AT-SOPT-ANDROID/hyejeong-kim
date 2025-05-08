@@ -15,4 +15,7 @@ sealed class NavRoute(
     data object My : NavRoute(
         route = "my"
     )
+    data object EditNickname : NavRoute(
+        route = "EditNickname"
+    )
 }

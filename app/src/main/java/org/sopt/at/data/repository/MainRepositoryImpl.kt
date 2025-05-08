@@ -2,6 +2,8 @@ package org.sopt.at.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.sopt.at.data.model.BaseState
+import org.sopt.at.data.model.request.EditNicknameRequest
+import org.sopt.at.data.model.response.EditNicknameResponse
 import org.sopt.at.data.model.response.MyNicknameResponse
 import org.sopt.at.data.model.response.UsersResponse
 import org.sopt.at.data.model.runRemote
@@ -16,4 +18,10 @@ class MainRepositoryImpl @Inject constructor(private val mainService: MainServic
 
     override suspend fun getUsers(query: String): Flow<BaseState<UsersResponse>> =
         runRemote { mainService.getUsers(query) }
+
+    override suspend fun patchNickname(
+        token: Long,
+        request: EditNicknameRequest
+    ): Flow<BaseState<EditNicknameResponse>> =
+        runRemote { mainService.patchNickname(token, request) }
 }
