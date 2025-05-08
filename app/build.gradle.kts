@@ -83,4 +83,5 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp.logging)
     implementation(libs.gson)
+    implementation(libs.datastore.preferences)
 }
