@@ -8,7 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface UserService {
+interface AuthService {
 
     // 회원가입 API
     @POST("/api/v1/auth/signup")

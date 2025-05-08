@@ -7,16 +7,16 @@ import org.sopt.at.data.model.request.SignUpRequest
 import org.sopt.at.data.model.response.SignInResponse
 import org.sopt.at.data.model.response.SignUpResponse
 import org.sopt.at.data.model.runRemote
-import org.sopt.at.data.remote.UserService
+import org.sopt.at.data.remote.AuthService
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(private val userService: UserService) :
+class AuthRepositoryImpl @Inject constructor(private val authService: AuthService) :
     AuthRepository {
 
     override suspend fun postSignUp(request: SignUpRequest): Flow<BaseState<SignUpResponse>> =
-        runRemote { userService.postSignUp(request) }
+        runRemote { authService.postSignUp(request) }
 
     override suspend fun postSignIn(request: SignInRequest): Flow<BaseState<SignInResponse>> =
-        runRemote { userService.postLogin(request) }
+        runRemote { authService.postLogin(request) }
 
 }

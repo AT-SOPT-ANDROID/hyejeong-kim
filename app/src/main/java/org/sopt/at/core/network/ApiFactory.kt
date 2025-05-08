@@ -6,7 +6,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.at.BuildConfig
-import org.sopt.at.data.remote.UserService
+import org.sopt.at.data.remote.AuthService
 import retrofit2.Retrofit
 
 object ApiFactory {
@@ -32,7 +32,7 @@ object ApiFactory {
 }
 
 object ServicePool {
-    val userService: UserService by lazy {
-        ApiFactory.create<UserService>()
+    val authService: AuthService by lazy {
+        ApiFactory.create<AuthService>()
     }
 }

@@ -10,7 +10,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.at.BuildConfig
-import org.sopt.at.data.remote.UserService
+import org.sopt.at.data.remote.AuthService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -39,6 +39,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserService(retrofit: Retrofit): UserService =
-        retrofit.create(UserService::class.java)
+    fun provideUserService(retrofit: Retrofit): AuthService =
+        retrofit.create(AuthService::class.java)
 }
