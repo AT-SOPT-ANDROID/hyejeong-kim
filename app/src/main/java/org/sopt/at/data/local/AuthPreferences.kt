@@ -23,6 +23,12 @@ class AuthPreferences(private val context: Context) {
         }
     }
 
+    suspend fun logout() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(USER_ID_KEY)
+        }
+    }
+
     val userId: Flow<Long> = context.dataStore.data
-        .map { it[USER_ID_KEY]!! }
+        .map { it[USER_ID_KEY] ?: 0L }
 }

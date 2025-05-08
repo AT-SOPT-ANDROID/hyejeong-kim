@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.dataStore
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.util.AutoLogin
@@ -35,22 +36,29 @@ fun MyScreen(
     navigateToSignIn: () -> Unit
 ) {
     val context = LocalContext.current
-    val autoLogin = AutoLogin(context)
-
-    var logoutRequest by remember { mutableStateOf(false) }
+//    val autoLogin = AutoLogin(context)
+//
+//    var logoutRequest by remember { mutableStateOf(false) }
 
     val viewModel: MyViewModel = hiltViewModel()
     val nickname by viewModel.nickname.collectAsState()
+    val effect = viewModel.effect.collectAsStateWithLifecycle(null)
 
-
-    LaunchedEffect(logoutRequest) {
-        if (logoutRequest) {
-            // 자동 로그인 정보 제거
-            autoLogin.logout()
-            // 로그인 뷰로 이동
-            navigateToSignIn()
+    LaunchedEffect(effect.value) {
+        when(effect.value) {
+            MyEffect.NavigateToSignIn -> navigateToSignIn()
+            else -> {}
         }
     }
+
+//    LaunchedEffect(logoutRequest) {
+//        if (logoutRequest) {
+//            // 자동 로그인 정보 제거
+//            autoLogin.logout()
+//            // 로그인 뷰로 이동
+//            navigateToSignIn()
+//        }
+//    }
 
     Column(
         modifier = Modifier
@@ -70,7 +78,7 @@ fun MyScreen(
         // 로그아웃 버튼
         TvingButton(
             onClick = {
-                logoutRequest = true
+                viewModel.sendEvent(MyEvent.OnLogoutClick)
             },
             content = stringResource(R.string.my_logout_button)
         )
