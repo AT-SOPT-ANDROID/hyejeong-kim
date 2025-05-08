@@ -68,7 +68,9 @@ fun MainScreen(
                 currentRoute != NavRoute.SignIn.route &&
                 currentRoute != NavRoute.Splash.route
             ) {
-                TvingBottomBar()
+                TvingBottomBar(
+                    navController = navController
+                )
             }
         },
         floatingActionButton = {
@@ -85,6 +87,7 @@ fun MainScreen(
         }
     ) { innerPadding ->
         NavGraph(
+            navController = navController,
             modifier = Modifier.padding(innerPadding),
             historyViewModel = historyViewModel,
             showSnackbar = showSnackbar

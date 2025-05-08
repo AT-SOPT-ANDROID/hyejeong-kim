@@ -25,7 +25,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             authPreferences.userId
                 .collect { id ->
-                    _isLoggedIn.value = if (id != 0L) true else false
+                    _isLoggedIn.value = id != 0L
                 }
         }
     }

@@ -2,6 +2,7 @@ package org.sopt.at.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,12 +19,11 @@ import org.sopt.at.presentation.ui.splash.SplashScreen
 
 @Composable
 fun NavGraph(
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     historyViewModel: HistoryViewModel,
     showSnackbar: (String) -> Unit = {}
 ) {
-    val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = NavRoute.Splash.route,
