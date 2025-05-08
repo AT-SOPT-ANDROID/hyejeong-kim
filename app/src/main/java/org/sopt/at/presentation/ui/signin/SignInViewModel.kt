@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import org.sopt.at.data.local.AuthPreferences
 import org.sopt.at.data.model.BaseState
 import org.sopt.at.data.model.request.SignInRequest
 import org.sopt.at.data.model.response.SignInResponse
@@ -28,7 +29,8 @@ sealed class SignInEffect {
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val authPreferences: AuthPreferences
 ) : ViewModel() {
 
     fun sendEvent(event: SignInEvent) {
@@ -58,6 +60,9 @@ class SignInViewModel @Inject constructor(
                         _uiState.value = result
                         _event.emit(SignInEvent.PostLogin(request))
                         _effect.send(SignInEffect.NavigateToHome)
+
+                        val response = result.data
+                        authPreferences.setUserId(response.data.userId)
                     }
 
                     BaseState.Idle -> {
