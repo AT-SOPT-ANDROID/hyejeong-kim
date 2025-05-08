@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.shorts
+package org.sopt.at.feature.search
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,17 +9,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ShortsScreen(modifier: Modifier = Modifier) {
+fun SearchScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("숏츠 화면")
+        Text("검색 화면")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewShortsScreen() {
-    ShortsScreen()
+private fun PreviewSearchScreen() {
+    SearchScreen()
 }

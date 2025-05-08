@@ -25,7 +25,7 @@ import org.sopt.at.core.component.topbar.TvingTopBar
 import org.sopt.at.core.navigation.BottomNavRoute
 import org.sopt.at.core.navigation.NavGraph
 import org.sopt.at.core.navigation.NavRoute
-import org.sopt.at.feature.main.history.HistoryViewModel
+import org.sopt.at.feature.history.HistoryViewModel
 
 @Composable
 fun MainScreen(

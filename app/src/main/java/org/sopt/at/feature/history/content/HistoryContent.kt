@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.history.content
+package org.sopt.at.feature.history.content
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import kotlinx.collections.immutable.persistentListOf
 import org.sopt.at.R
 import org.sopt.at.core.component.list.HistorySeriesItem
 import org.sopt.at.data.local.entity.Series
-import org.sopt.at.feature.main.history.HistoryViewModel
+import org.sopt.at.feature.history.HistoryViewModel
 import org.sopt.at.ui.theme.TvingTheme
 
 @OptIn(ExperimentalFoundationApi::class)

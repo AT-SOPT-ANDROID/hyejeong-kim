@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.history
+package org.sopt.at.feature.history
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.sopt.at.feature.main.history.content.HistoryContent
+import org.sopt.at.feature.history.content.HistoryContent
 
 @Composable
 fun HistoryScreen(

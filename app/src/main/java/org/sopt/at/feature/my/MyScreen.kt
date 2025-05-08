@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.my
+package org.sopt.at.feature.my
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

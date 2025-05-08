@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.my
+package org.sopt.at.feature.my
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

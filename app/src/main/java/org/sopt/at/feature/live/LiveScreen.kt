@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.search
+package org.sopt.at.feature.live
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,17 +9,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
+fun LiveScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("검색 화면")
+        Text("라이브 화면")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewSearchScreen() {
-    SearchScreen()
+private fun PreviewLiveScreen() {
+    LiveScreen()
 }

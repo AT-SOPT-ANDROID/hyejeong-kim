@@ -1,4 +1,4 @@
-package org.sopt.at.feature.main.history
+package org.sopt.at.feature.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
