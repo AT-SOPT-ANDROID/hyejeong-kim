@@ -10,8 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.sopt.at.core.navigation.LocalNavController
-import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.data.model.BaseState
 import org.sopt.at.data.model.request.SignUpRequest
 import org.sopt.at.presentation.ui.signup.content.SignUpContent
@@ -22,8 +20,6 @@ fun SignUpScreen(
     navigateToSignIn: () -> Unit = {},
     showSnackbar: (String) -> Unit = {}
 ) {
-    val navController = LocalNavController.current
-
     var currentStep by remember { mutableStateOf(1) }
     var nickname by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -38,6 +34,7 @@ fun SignUpScreen(
             is BaseState.Error -> {
                 showSnackbar((uiState as BaseState.Error).message)
             }
+
             is BaseState.Success<*> -> {
                 navigateToSignIn()
             }
@@ -55,7 +52,7 @@ fun SignUpScreen(
                 currentStep = 2
             },
             onBack = {
-                navController.popBackStack()
+                navigateToSignIn()
             },
             showErrorSnackbar = showSnackbar
         )

@@ -28,15 +28,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
-import org.sopt.at.core.navigation.LocalNavController
 import org.sopt.at.core.util.AutoLogin
-import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.core.util.noRippleClickable
-import org.sopt.at.data.model.BaseState
 import org.sopt.at.data.model.request.SignInRequest
 import org.sopt.at.ui.theme.TvingTheme
 
@@ -47,15 +43,9 @@ fun SignInScreen(
     navigateToHome: () -> Unit = {},
     showSnackbar: (String) -> Unit = {}
 ) {
-    val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-
     val viewModel: SignInViewModel = hiltViewModel()
-
-    val signUpId = savedStateHandle?.get<String>(IntentKeys.ID_KEY) ?: ""
-    val signUpPw = savedStateHandle?.get<String>(IntentKeys.PW_KEY) ?: ""
 
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -77,7 +67,7 @@ fun SignInScreen(
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect {
-            when(it) {
+            when (it) {
                 SignInEffect.NavigateToHome -> navigateToHome()
                 is SignInEffect.ShowSnackbar -> showSnackbar(it.message)
             }
