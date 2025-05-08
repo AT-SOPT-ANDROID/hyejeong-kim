@@ -4,10 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,10 +31,12 @@ import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
+import org.sopt.at.core.component.topbar.TvingTopBar
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun SignUpContent(
+    modifier: Modifier = Modifier,
     step: Int,
     id: String = "",
     onIdChange: (String) -> Unit = {},
@@ -35,7 +44,6 @@ fun SignUpContent(
     onPwChange: (String) -> Unit = {},
     nickname: String = "",
     onNicknameChange: (String) -> Unit = {},
-    modifier: Modifier = Modifier,
     onNext: () -> Unit,
     onBack: () -> Unit,
     showErrorSnackbar: (String) -> Unit
@@ -58,6 +66,9 @@ fun SignUpContent(
             .background(color = TvingTheme.colors.BasicBlack)
             .padding(15.dp),
     ) {
+        TvingTopBar(
+            onBackClick = onBack
+        )
 
         Column(
             modifier = Modifier

@@ -35,7 +35,9 @@ fun SignUpScreen(
 
     LaunchedEffect(uiState) {
         when (uiState) {
-            is BaseState.Error -> {}
+            is BaseState.Error -> {
+                showSnackbar((uiState as BaseState.Error).message)
+            }
             is BaseState.Success<*> -> {
                 navigateToSignIn()
             }
@@ -72,11 +74,8 @@ fun SignUpScreen(
             pw = pw,
             onPwChange = { pw = it },
             onNext = {
-                navController.previousBackStackEntry?.savedStateHandle?.set(IntentKeys.ID_KEY, id)
-                navController.previousBackStackEntry?.savedStateHandle?.set(IntentKeys.PW_KEY, pw)
                 val request = SignUpRequest(nickname = nickname, loginId = id, password = pw)
                 viewModel.sendEvent(SignUpEvent.PostSignUp(request))
-                navigateToSignIn()
             },
             onBack = { currentStep = 2 },
             showErrorSnackbar = showSnackbar
