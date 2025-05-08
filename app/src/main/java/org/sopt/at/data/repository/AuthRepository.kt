@@ -7,7 +7,7 @@ import org.sopt.at.data.model.request.SignUpRequest
 import org.sopt.at.data.model.response.SignInResponse
 import org.sopt.at.data.model.response.SignUpResponse
 
-interface UserRepository {
+interface AuthRepository {
     suspend fun postSignUp(request: SignUpRequest): Flow<BaseState<SignUpResponse>>
 
     suspend fun postSignIn(request: SignInRequest): Flow<BaseState<SignInResponse>>

@@ -5,12 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.at.data.model.BaseState
 import org.sopt.at.data.model.request.SignUpRequest
 import org.sopt.at.data.model.response.SignUpResponse
-import org.sopt.at.data.repository.UserRepository
+import org.sopt.at.data.repository.AuthRepository
 import javax.inject.Inject
 
 sealed class SignUpEvent {
@@ -19,7 +18,7 @@ sealed class SignUpEvent {
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     fun sendEvent(event: SignUpEvent) {
@@ -33,7 +32,7 @@ class SignUpViewModel @Inject constructor(
 
     private fun postSignUp(request: SignUpRequest) {
         viewModelScope.launch {
-            userRepository.postSignUp(request).collect { result ->
+            authRepository.postSignUp(request).collect { result ->
                 _uiState.value = result
             }
         }

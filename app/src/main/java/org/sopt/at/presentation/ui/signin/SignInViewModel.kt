@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import org.sopt.at.data.model.BaseState
 import org.sopt.at.data.model.request.SignInRequest
 import org.sopt.at.data.model.response.SignInResponse
-import org.sopt.at.data.repository.UserRepository
+import org.sopt.at.data.repository.AuthRepository
 import javax.inject.Inject
 
 sealed class SignInEvent {
@@ -28,7 +28,7 @@ sealed class SignInEffect {
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     fun sendEvent(event: SignInEvent) {
@@ -48,7 +48,7 @@ class SignInViewModel @Inject constructor(
 
     private fun postSignIn(request: SignInRequest) {
         viewModelScope.launch {
-            userRepository.postSignIn(request).collect { result ->
+            authRepository.postSignIn(request).collect { result ->
                 when (result) {
                     is BaseState.Error -> {
                         _effect.send(SignInEffect.ShowSnackbar(result.message))

@@ -10,8 +10,8 @@ import org.sopt.at.data.model.runRemote
 import org.sopt.at.data.remote.UserService
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(private val userService: UserService) :
-    UserRepository {
+class AuthRepositoryImpl @Inject constructor(private val userService: UserService) :
+    AuthRepository {
 
     override suspend fun postSignUp(request: SignUpRequest): Flow<BaseState<SignUpResponse>> =
         runRemote { userService.postSignUp(request) }
