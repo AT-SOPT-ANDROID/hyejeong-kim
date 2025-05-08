@@ -10,55 +10,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.dataStore
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
-import org.sopt.at.core.util.AutoLogin
-import org.sopt.at.core.util.IntentKeys
-import org.sopt.at.data.local.AuthPreferences
 
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
     navigateToSignIn: () -> Unit
 ) {
-    val context = LocalContext.current
-//    val autoLogin = AutoLogin(context)
-//
-//    var logoutRequest by remember { mutableStateOf(false) }
-
     val viewModel: MyViewModel = hiltViewModel()
     val nickname by viewModel.nickname.collectAsState()
     val effect = viewModel.effect.collectAsStateWithLifecycle(null)
 
     LaunchedEffect(effect.value) {
-        when(effect.value) {
+        when (effect.value) {
             MyEffect.NavigateToSignIn -> navigateToSignIn()
             else -> {}
         }
     }
-
-//    LaunchedEffect(logoutRequest) {
-//        if (logoutRequest) {
-//            // 자동 로그인 정보 제거
-//            autoLogin.logout()
-//            // 로그인 뷰로 이동
-//            navigateToSignIn()
-//        }
-//    }
 
     Column(
         modifier = Modifier
