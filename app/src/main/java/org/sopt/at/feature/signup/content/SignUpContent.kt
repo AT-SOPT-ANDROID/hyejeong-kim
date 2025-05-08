@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
-import org.sopt.at.core.component.textfield.IdTextField
+import org.sopt.at.core.component.textfield.BasicTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
 import org.sopt.at.core.component.topbar.TvingTopBar
 import org.sopt.at.ui.theme.TvingTheme
@@ -87,9 +87,9 @@ fun SignUpContent(
                     1 -> {
                         // 닉네임 입력 창
                         Column {
-                            IdTextField(
-                                id = nickname,
-                                onIdChange = onNicknameChange,
+                            BasicTextField(
+                                value = nickname,
+                                onValueChange = onNicknameChange,
                                 placeholderText = stringResource(R.string.textfield_nickname),
                                 modifier = Modifier
                                     .padding(top = 20.dp)
@@ -111,9 +111,9 @@ fun SignUpContent(
                     2 -> {
                         // 아이디 입력 창
                         Column {
-                            IdTextField(
-                                id = id,
-                                onIdChange = onIdChange,
+                            BasicTextField(
+                                value = id,
+                                onValueChange = onIdChange,
                                 placeholderText = stringResource(R.string.textfield_id),
                                 modifier = Modifier
                                     .padding(top = 20.dp)

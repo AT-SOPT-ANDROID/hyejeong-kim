@@ -12,20 +12,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.at.R
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
-fun IdTextField(
-    id: String,
-    onIdChange: (String) -> Unit,
+fun BasicTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
     placeholderText: String,
     modifier: Modifier = Modifier
 ) {
     TextField(
-        value = id,
-        onValueChange = onIdChange,
+        value = value,
+        onValueChange = onValueChange,
         placeholder = {
             Text(
                 text = placeholderText,
@@ -50,5 +51,15 @@ fun IdTextField(
         ),
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+    )
+}
+
+@Preview
+@Composable
+private fun PreviewBasicTextField() {
+    BasicTextField(
+        value = "",
+        onValueChange = {},
+        placeholderText = stringResource(R.string.textfield_id)
     )
 }

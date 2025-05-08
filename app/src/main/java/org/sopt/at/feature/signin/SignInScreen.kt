@@ -29,9 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.sopt.at.R
-import org.sopt.at.core.component.textfield.IdTextField
+import org.sopt.at.core.component.textfield.BasicTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
-import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.noRippleClickable
 import org.sopt.at.data.model.request.SignInRequest
 import org.sopt.at.ui.theme.TvingTheme
@@ -43,27 +42,16 @@ fun SignInScreen(
     navigateToHome: () -> Unit = {},
     showSnackbar: (String) -> Unit = {}
 ) {
-    val context = LocalContext.current
-
     val viewModel: SignInViewModel = hiltViewModel()
 
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
 
-//    val autoLogin = AutoLogin(context)
-
     // 로그인 버튼 색깔
     val isFormFilled = id.isNotBlank() && password.isNotBlank()
     val loginButtonColor = if (isFormFilled) TvingTheme.colors.BrandRed else TvingTheme.colors.Gray4
     val loginTextColor = if (isFormFilled) TvingTheme.colors.BasicWhite else TvingTheme.colors.Gray2
-
-//    // 자동 로그인
-//    LaunchedEffect(Unit) {
-//        if (autoLogin.isLoggedIn()) {
-//            navigateToHome()
-//        }
-//    }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect {
@@ -88,9 +76,9 @@ fun SignInScreen(
         )
 
         // 아이디 입력 창
-        IdTextField(
-            id = id,
-            onIdChange = { id = it },
+        BasicTextField(
+            value = id,
+            onValueChange = { id = it },
             placeholderText = stringResource(R.string.textfield_id),
             modifier = Modifier
                 .padding(top = 20.dp)
