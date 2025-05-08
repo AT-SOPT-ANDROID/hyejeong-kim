@@ -2,9 +2,9 @@ package org.sopt.at.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.sopt.at.presentation.ui.main.history.HistoryScreen
 import org.sopt.at.presentation.ui.main.history.HistoryViewModel
 import org.sopt.at.presentation.ui.main.home.HomeScreen
@@ -14,6 +14,7 @@ import org.sopt.at.presentation.ui.main.search.SearchScreen
 import org.sopt.at.presentation.ui.main.shorts.ShortsScreen
 import org.sopt.at.presentation.ui.signin.SignInScreen
 import org.sopt.at.presentation.ui.signup.SignUpScreen
+import org.sopt.at.presentation.ui.splash.SplashScreen
 
 @Composable
 fun NavGraph(
@@ -21,13 +22,31 @@ fun NavGraph(
     historyViewModel: HistoryViewModel,
     showSnackbar: (String) -> Unit = {}
 ) {
-    val navController = LocalNavController.current
+    val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = NavRoute.SignIn.route,
+        startDestination = NavRoute.Splash.route,
         modifier = modifier
     ) {
+        composable(route = NavRoute.Splash.route) {
+            SplashScreen(
+                navigateToHome = {
+                    navController.navigate(BottomNavRoute.Home.route) {
+                        popUpTo(NavRoute.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                navigateToSignIn = {
+                    navController.navigate(NavRoute.SignIn.route) {
+                        popUpTo(NavRoute.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
         composable(route = NavRoute.SignIn.route) {
             SignInScreen(
                 navigateToHome = {

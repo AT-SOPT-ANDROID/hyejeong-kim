@@ -51,19 +51,19 @@ fun SignInScreen(
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
 
-    val autoLogin = AutoLogin(context)
+//    val autoLogin = AutoLogin(context)
 
     // 로그인 버튼 색깔
     val isFormFilled = id.isNotBlank() && password.isNotBlank()
     val loginButtonColor = if (isFormFilled) TvingTheme.colors.BrandRed else TvingTheme.colors.Gray4
     val loginTextColor = if (isFormFilled) TvingTheme.colors.BasicWhite else TvingTheme.colors.Gray2
 
-    // 자동 로그인
-    LaunchedEffect(Unit) {
-        if (autoLogin.isLoggedIn()) {
-            navigateToHome()
-        }
-    }
+//    // 자동 로그인
+//    LaunchedEffect(Unit) {
+//        if (autoLogin.isLoggedIn()) {
+//            navigateToHome()
+//        }
+//    }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect {

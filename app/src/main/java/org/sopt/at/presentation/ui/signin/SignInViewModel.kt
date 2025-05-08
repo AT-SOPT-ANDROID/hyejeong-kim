@@ -48,6 +48,21 @@ class SignInViewModel @Inject constructor(
     private val _effect = Channel<SignInEffect>(Channel.BUFFERED)
     val effect: Flow<SignInEffect> = _effect.receiveAsFlow()
 
+    private val _isLoggedIn = MutableStateFlow<Boolean?>(null)
+    val isLoggedIn: StateFlow<Boolean?> = _isLoggedIn
+
+    init {
+        checkLoginState()
+    }
+
+    private fun checkLoginState() {
+        viewModelScope.launch {
+            authPreferences.userId.collect {
+
+            }
+        }
+    }
+
     private fun postSignIn(request: SignInRequest) {
         viewModelScope.launch {
             authRepository.postSignIn(request).collect { result ->

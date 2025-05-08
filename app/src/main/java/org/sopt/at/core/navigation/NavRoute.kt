@@ -3,6 +3,9 @@ package org.sopt.at.core.navigation
 sealed class NavRoute(
     val route: String
 ) {
+    data object Splash : NavRoute(
+        route = "splash"
+    )
     data object SignIn : NavRoute(
         route = "signIn"
     )

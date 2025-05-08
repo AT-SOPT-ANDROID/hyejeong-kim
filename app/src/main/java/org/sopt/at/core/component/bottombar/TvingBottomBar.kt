@@ -16,15 +16,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import org.sopt.at.core.navigation.BottomNavRoute
-import org.sopt.at.core.navigation.LocalNavController
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingBottomBar(
     modifier: Modifier = Modifier
 ) {
-    val navController = LocalNavController.current
+    val navController = rememberNavController()
 
     val screen = listOf<BottomNavRoute>(
         BottomNavRoute.Home,

@@ -64,7 +64,10 @@ fun MainScreen(
             }
         },
         bottomBar = {
-            if (currentRoute != NavRoute.SignUp.route && currentRoute != NavRoute.SignIn.route) {
+            if (currentRoute != NavRoute.SignUp.route &&
+                currentRoute != NavRoute.SignIn.route &&
+                currentRoute != NavRoute.Splash.route
+            ) {
                 TvingBottomBar()
             }
         },
