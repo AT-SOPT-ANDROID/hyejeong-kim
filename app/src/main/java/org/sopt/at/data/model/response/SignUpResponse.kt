@@ -8,13 +8,13 @@ data class SignUpResponse(
     val success: Boolean,
     val code: String,
     val message: String,
-    val data: SignUpUser
+    val data: SignUpData
 )
 
 @Serializable
-data class SignUpUser(
+data class SignUpData(
     @SerialName("userId")
-    val userId: Int,
+    val userId: Long,
     @SerialName("nickname")
     val nickname: String
 )

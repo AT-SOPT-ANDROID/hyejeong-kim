@@ -75,7 +75,7 @@ fun SignUpScreen(
                 navController.previousBackStackEntry?.savedStateHandle?.set(IntentKeys.ID_KEY, id)
                 navController.previousBackStackEntry?.savedStateHandle?.set(IntentKeys.PW_KEY, pw)
                 val request = SignUpRequest(nickname = nickname, loginId = id, password = pw)
-                viewModel.processIntent(SignUpIntent.PostSignUp(request))
+                viewModel.sendEvent(SignUpEvent.PostSignUp(request))
                 navigateToSignIn()
             },
             onBack = { currentStep = 2 },

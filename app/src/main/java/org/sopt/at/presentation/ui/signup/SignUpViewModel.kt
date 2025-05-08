@@ -13,8 +13,8 @@ import org.sopt.at.data.model.response.SignUpResponse
 import org.sopt.at.data.repository.UserRepository
 import javax.inject.Inject
 
-sealed class SignUpIntent {
-    data class PostSignUp(val request: SignUpRequest) : SignUpIntent()
+sealed class SignUpEvent {
+    data class PostSignUp(val request: SignUpRequest) : SignUpEvent()
 }
 
 @HiltViewModel
@@ -22,14 +22,14 @@ class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    fun processIntent(intent: SignUpIntent) {
-        when (intent) {
-            is SignUpIntent.PostSignUp -> postSignUp(intent.request)
+    fun sendEvent(event: SignUpEvent) {
+        when (event) {
+            is SignUpEvent.PostSignUp -> postSignUp(event.request)
         }
     }
 
     private val _uiState = MutableStateFlow<BaseState<SignUpResponse>>(BaseState.Idle)
-    val uiState: StateFlow<BaseState<SignUpResponse>> = _uiState.asStateFlow()
+    val uiState: StateFlow<BaseState<SignUpResponse>> = _uiState
 
     private fun postSignUp(request: SignUpRequest) {
         viewModelScope.launch {
