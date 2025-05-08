@@ -57,6 +57,7 @@ class SignInViewModel @Inject constructor(
                     is BaseState.Success -> {
                         _uiState.value = result
                         _event.emit(SignInEvent.PostLogin(request))
+                        _effect.send(SignInEffect.NavigateToHome)
                     }
 
                     BaseState.Idle -> {
