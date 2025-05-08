@@ -18,16 +18,16 @@ suspend fun <T> runRemote(block: suspend () -> Response<T>): Flow<BaseState<T>> 
         val response = block()
         if (response.isSuccessful) {
             response.body()?.let {
-                BaseState.Success(it)
+                emit(BaseState.Success(it))
             } ?: run {
-                BaseState.Error("응답이 비어 있습니다", "EMPTY")
+                emit(BaseState.Error("응답이 비어 있습니다", "EMPTY"))
             }
         } else {
             val error = Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-            BaseState.Error(error.message, error.code)
+            emit(BaseState.Error(error.message, error.code))
         }
     } catch (e: Exception) {
         Log.d(TAG, e.message.toString())
-        BaseState.Error("네트워크 통신 에러", "EMPTY")
+        emit(BaseState.Error("네트워크 통신 에러", "EMPTY"))
     }
 }

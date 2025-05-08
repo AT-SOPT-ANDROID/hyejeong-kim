@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +27,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.at.R
 import org.sopt.at.core.component.textfield.IdTextField
 import org.sopt.at.core.component.textfield.PasswordTextField
@@ -36,6 +36,8 @@ import org.sopt.at.core.navigation.LocalNavController
 import org.sopt.at.core.util.AutoLogin
 import org.sopt.at.core.util.IntentKeys
 import org.sopt.at.core.util.noRippleClickable
+import org.sopt.at.data.model.BaseState
+import org.sopt.at.data.model.request.SignInRequest
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
@@ -46,19 +48,19 @@ fun SignInScreen(
     showSnackbar: (String) -> Unit = {}
 ) {
     val navController = LocalNavController.current
+    val context = LocalContext.current
 
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+
+    val viewModel: SignInViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val signUpId = savedStateHandle?.get<String>(IntentKeys.ID_KEY) ?: ""
     val signUpPw = savedStateHandle?.get<String>(IntentKeys.PW_KEY) ?: ""
 
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
-    val context = LocalContext.current
-
-    // 스낵바
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
 
     val autoLogin = AutoLogin(context)
 
@@ -67,14 +69,24 @@ fun SignInScreen(
     val loginButtonColor = if (isFormFilled) TvingTheme.colors.BrandRed else TvingTheme.colors.Gray4
     val loginTextColor = if (isFormFilled) TvingTheme.colors.BasicWhite else TvingTheme.colors.Gray2
 
-    val isValidProfile =
-        id == signUpId && password == signUpPw && signUpId.isNotBlank() && signUpPw.isNotBlank()
-
-    val invalidUserMsg = stringResource(R.string.sign_in_invalid)
-
+    // 자동 로그인
     LaunchedEffect(Unit) {
         if (autoLogin.isLoggedIn()) {
             navigateToHome()
+        }
+    }
+
+    LaunchedEffect(uiState) {
+        when (uiState) {
+            is BaseState.Error -> {
+                showSnackbar((uiState as BaseState.Error).message)
+            }
+
+            is BaseState.Success<*> -> {
+                navigateToHome()
+            }
+
+            else -> Unit
         }
     }
 
@@ -119,15 +131,7 @@ fun SignInScreen(
                 .background(loginButtonColor, RoundedCornerShape(5.dp))
                 .padding(vertical = 14.dp)
                 .noRippleClickable {
-                    if (isValidProfile) {
-                        // 회원가입 정보 일치 시
-                        // 자동 로그인 정보 저장
-                        autoLogin.saveLoginInfo(id, password)
-                        navigateToHome()
-                    } else {
-                        // 회원 정보가 유효 하지 않을 시 스낵바
-                        showSnackbar(invalidUserMsg)
-                    }
+                    viewModel.sendEvent(SignInEvent.PostLogin(SignInRequest(id, password)))
                 },
             contentAlignment = Alignment.Center
         ) {
