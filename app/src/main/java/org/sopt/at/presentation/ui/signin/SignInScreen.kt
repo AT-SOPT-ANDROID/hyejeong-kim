@@ -53,7 +53,6 @@ fun SignInScreen(
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
 
     val viewModel: SignInViewModel = hiltViewModel()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val signUpId = savedStateHandle?.get<String>(IntentKeys.ID_KEY) ?: ""
     val signUpPw = savedStateHandle?.get<String>(IntentKeys.PW_KEY) ?: ""
@@ -76,17 +75,12 @@ fun SignInScreen(
         }
     }
 
-    LaunchedEffect(uiState) {
-        when (uiState) {
-            is BaseState.Error -> {
-                showSnackbar((uiState as BaseState.Error).message)
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect {
+            when(it) {
+                SignInEffect.NavigateToHome -> navigateToHome()
+                is SignInEffect.ShowSnackbar -> showSnackbar(it.message)
             }
-
-            is BaseState.Success<*> -> {
-                navigateToHome()
-            }
-
-            else -> Unit
         }
     }
 
