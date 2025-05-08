@@ -13,7 +13,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
@@ -60,8 +59,7 @@ fun MainScreen(
                 TvingTopBar(
                     onBackClick = {
                         navController.popBackStack()
-                    },
-                    modifier = Modifier.padding(15.dp)
+                    }
                 )
             }
         },
