@@ -19,11 +19,6 @@ sealed class SearchEvent {
     data class OnQueryChanged(val query: String) : SearchEvent()
 }
 
-data class SearchState(
-    val query: String = "",
-    val results: List<String> = emptyList()
-)
-
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: MainRepository
