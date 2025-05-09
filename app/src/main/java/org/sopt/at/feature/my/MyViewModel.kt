@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 sealed class MyEvent {
     object OnLogoutClick : MyEvent()
-    object onEditNicknameClick : MyEvent()
+    object OnEditNicknameClick : MyEvent()
 }
 
 sealed class MyEffect {
@@ -43,7 +43,7 @@ class MyViewModel @Inject constructor(
     fun sendEvent(event: MyEvent) {
         when (event) {
             MyEvent.OnLogoutClick -> logout()
-            MyEvent.onEditNicknameClick -> onEditNicknameClick()
+            MyEvent.OnEditNicknameClick -> onEditNicknameClick()
         }
     }
 

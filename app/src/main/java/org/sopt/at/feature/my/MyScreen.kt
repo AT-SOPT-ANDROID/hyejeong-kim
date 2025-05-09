@@ -61,7 +61,7 @@ fun MyScreen(
             // 닉네임 변경 버튼
             TvingButton(
                 onClick = {
-                    viewModel.sendEvent(MyEvent.onEditNicknameClick)
+                    viewModel.sendEvent(MyEvent.OnEditNicknameClick)
                 },
                 content = stringResource(R.string.button_edit_nickname)
             )
