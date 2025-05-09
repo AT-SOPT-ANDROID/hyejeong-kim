@@ -15,10 +15,23 @@ import org.sopt.at.data.model.request.SignUpRequest
 import org.sopt.at.feature.signup.content.SignUpContent
 
 @Composable
-fun SignUpScreen(
+fun SignUpRoute(
+    navigateToSignIn: () -> Unit,
+    showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
-    navigateToSignIn: () -> Unit = {},
-    showSnackbar: (String) -> Unit = {}
+) {
+    SignUpScreen(
+        navigateToSignIn = navigateToSignIn,
+        showSnackbar = showSnackbar,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun SignUpScreen(
+    navigateToSignIn: () -> Unit,
+    showSnackbar: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var currentStep by remember { mutableStateOf(1) }
     var nickname by remember { mutableStateOf("") }
@@ -35,7 +48,7 @@ fun SignUpScreen(
                 showSnackbar((uiState as BaseState.Error).message)
             }
 
-            is BaseState.Success<*> -> {
+            is BaseState.Success -> {
                 navigateToSignIn()
             }
 
@@ -84,5 +97,8 @@ fun SignUpScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSignUpScreen() {
-    SignUpScreen()
+    SignUpScreen(
+        navigateToSignIn = {},
+        showSnackbar = {}
+    )
 }

@@ -5,8 +5,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.at.R
@@ -14,8 +12,7 @@ import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun HistoryFab(
-    modifier: Modifier = Modifier,
-    onFabClick: () -> Unit = {}
+    onFabClick: () -> Unit
 ) {
     SmallFloatingActionButton(
         onClick = onFabClick,
@@ -31,5 +28,7 @@ fun HistoryFab(
 @Preview
 @Composable
 private fun PreviewHistoryFab() {
-    HistoryFab()
+    HistoryFab(
+        onFabClick = {}
+    )
 }

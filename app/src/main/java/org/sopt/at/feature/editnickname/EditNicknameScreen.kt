@@ -26,6 +26,19 @@ import org.sopt.at.data.model.request.EditNicknameRequest
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
+fun EditNicknameRoute(
+    navigateToMy: () -> Unit,
+    showSnackbar: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    EditNicknameScreen(
+        navigateToMy = navigateToMy,
+        showSnackbar = showSnackbar,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun EditNicknameScreen(
     navigateToMy: () -> Unit,
     showSnackbar: (String) -> Unit,
@@ -50,7 +63,7 @@ fun EditNicknameScreen(
             .padding(15.dp)
             .imePadding(),
         verticalArrangement = Arrangement.SpaceBetween
-        ) {
+    ) {
         BasicTextField(
             value = nickname,
             onValueChange = {

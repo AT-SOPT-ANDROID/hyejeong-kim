@@ -1,11 +1,13 @@
 package org.sopt.at.feature.main
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,31 +16,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import org.sopt.at.core.component.bottombar.TvingBottomBar
 import org.sopt.at.core.component.dialog.HistoryDialog
 import org.sopt.at.core.component.fab.HistoryFab
 import org.sopt.at.core.component.topbar.TvingHomeTopBar
 import org.sopt.at.core.component.topbar.TvingTopBar
-import org.sopt.at.core.navigation.BottomNavRoute
-import org.sopt.at.core.navigation.NavGraph
-import org.sopt.at.core.navigation.NavRoute
 import org.sopt.at.feature.history.HistoryViewModel
+import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier,
+    navigator: MainNavigator = rememberMainNavigator(),
     historyViewModel: HistoryViewModel = hiltViewModel()
 ) {
-    val navController = rememberNavController()
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
-    var showAddDialog by remember { mutableStateOf(false) }
-
     // 스낵바
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -49,37 +42,67 @@ fun MainScreen(
         }
     }
 
+    MainScreenContent(
+        navigator = navigator,
+        snackbarHostState = snackbarHostState,
+        historyViewModel = historyViewModel,
+        showSnackbar = showSnackbar
+    )
+}
+
+@Composable
+private fun MainScreenContent(
+    modifier: Modifier = Modifier,
+    navigator: MainNavigator,
+    snackbarHostState: SnackbarHostState,
+    historyViewModel: HistoryViewModel,
+    showSnackbar: (String) -> Unit
+) {
+    var showAddDialog by remember { mutableStateOf(false) }
+
     Scaffold(
+        modifier = modifier,
         topBar = {
-            if (currentRoute == BottomNavRoute.Home.route) {
+            if (navigator.showHomeTopBar()) {
                 TvingHomeTopBar(
-                    navigateToMy = { navController.navigate(route = NavRoute.My.route) }
+                    navigateToMy = {
+                        navigator.navigateToMy()
+                    }
                 )
             } else if (
-                currentRoute == NavRoute.My.route ||
-                currentRoute == NavRoute.EditNickname.route
+                navigator.showTopBar()
             ) {
                 TvingTopBar(
                     onBackClick = {
-                        navController.popBackStack()
+                        navigator.popBackStack()
                     }
                 )
             }
         },
+        content = { innerPadding ->
+            MainNavHost(
+                navigator = navigator,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(TvingTheme.colors.BasicBlack)
+                    .padding(innerPadding),
+                historyViewModel = historyViewModel,
+                showSnackbar = showSnackbar
+            )
+        },
         bottomBar = {
-            if (currentRoute != NavRoute.SignUp.route &&
-                currentRoute != NavRoute.SignIn.route &&
-                currentRoute != NavRoute.Splash.route &&
-                currentRoute != NavRoute.My.route &&
-                currentRoute != NavRoute.EditNickname.route
-            ) {
-                TvingBottomBar(
-                    navController = navController
-                )
-            }
+            TvingBottomBar(
+                modifier = Modifier
+                    .background(TvingTheme.colors.BasicBlack)
+                    .navigationBarsPadding(),
+                visible = navigator.showBottomBar(),
+                tabs = MainTab.entries.toPersistentList(),
+                currentTab = navigator.currentTab,
+                onTabSelected = { navigator.navigate(it) }
+            )
         },
         floatingActionButton = {
-            if (currentRoute == BottomNavRoute.History.route) {
+            if (navigator.showHistoryFab()) {
                 HistoryFab(
                     onFabClick = {
                         showAddDialog = true
@@ -87,18 +110,8 @@ fun MainScreen(
                 )
             }
         },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) { innerPadding ->
-        NavGraph(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding),
-            historyViewModel = historyViewModel,
-            showSnackbar = showSnackbar
-        )
-    }
-
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    )
     // history 시리즈 다이얼로그 표시
     if (showAddDialog) {
         HistoryDialog(
@@ -113,8 +126,8 @@ fun MainScreen(
         )
     }
 
-    val selectedSeries by historyViewModel.selectedSeries.collectAsState()
-    val showDeleteDialog by historyViewModel.showDeleteDialog.collectAsState()
+    val selectedSeries by historyViewModel.selectedSeries.collectAsStateWithLifecycle()
+    val showDeleteDialog by historyViewModel.showDeleteDialog.collectAsStateWithLifecycle()
 
     // history 시리즈 삭제 다이얼로그 표시
     if (showDeleteDialog) {

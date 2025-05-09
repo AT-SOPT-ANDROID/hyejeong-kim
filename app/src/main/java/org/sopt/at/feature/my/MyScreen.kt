@@ -25,6 +25,19 @@ import org.sopt.at.R
 import org.sopt.at.core.component.button.TvingButton
 
 @Composable
+fun MyRoute(
+    navigateToSignIn: () -> Unit,
+    navigateToEditNickname: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    MyScreen(
+        navigateToSignIn = navigateToSignIn,
+        navigateToEditNickname = navigateToEditNickname,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun MyScreen(
     navigateToSignIn: () -> Unit,
     navigateToEditNickname: () -> Unit,

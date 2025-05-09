@@ -9,6 +9,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.sopt.at.feature.history.content.HistoryContent
 
 @Composable
+fun HistoryRoute(
+    modifier: Modifier = Modifier,
+    historyViewModel: HistoryViewModel
+) {
+    HistoryScreen(
+        modifier = modifier,
+        viewModel = historyViewModel
+    )
+}
+
+@Composable
 fun HistoryScreen(
     modifier: Modifier = Modifier,
     viewModel: HistoryViewModel

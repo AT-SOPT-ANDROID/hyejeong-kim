@@ -7,6 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.sopt.at.ui.theme.TvingTheme
+
+@Composable
+fun ShortsRoute(modifier: Modifier = Modifier) {
+    ShortsScreen(
+        modifier = Modifier
+    )
+}
 
 @Composable
 fun ShortsScreen(modifier: Modifier = Modifier) {
@@ -14,7 +22,10 @@ fun ShortsScreen(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("숏츠 화면")
+        Text(
+            text = "숏츠 화면",
+            color = TvingTheme.colors.BasicWhite
+        )
     }
 }
 

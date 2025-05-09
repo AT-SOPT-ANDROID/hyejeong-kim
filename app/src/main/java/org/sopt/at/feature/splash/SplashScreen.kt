@@ -16,6 +16,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.sopt.at.R
 
+@Composable
+fun SplashRoute(
+    navigateToHome: () -> Unit,
+    navigateToSignIn: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    SplashScreen(
+        navigateToHome = navigateToHome,
+        navigateToSignIn = navigateToSignIn,
+        modifier = modifier
+    )
+}
 
 @Composable
 fun SplashScreen(
@@ -35,7 +47,9 @@ fun SplashScreen(
     }
 
     Box(
-        modifier = modifier.fillMaxSize().background(Color.Black),
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
         Image(

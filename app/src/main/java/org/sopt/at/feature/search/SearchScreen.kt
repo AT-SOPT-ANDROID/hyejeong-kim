@@ -26,6 +26,13 @@ import org.sopt.at.core.component.textfield.BasicTextField
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
+fun SearchRoute(modifier: Modifier = Modifier) {
+    SearchScreen(
+        modifier = modifier
+    )
+}
+
+@Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel()

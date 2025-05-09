@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,11 +35,26 @@ import org.sopt.at.data.model.request.SignInRequest
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
-fun SignInScreen(
+fun SignInRoute(
+    navigateToSignUp: () -> Unit,
+    navigateToHome: () -> Unit,
+    showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
-    navigateToSignUp: () -> Unit = {},
-    navigateToHome: () -> Unit = {},
-    showSnackbar: (String) -> Unit = {}
+) {
+    SignInScreen(
+        modifier = modifier,
+        navigateToSignUp = navigateToSignUp,
+        navigateToHome = navigateToHome,
+        showSnackbar = showSnackbar
+    )
+}
+
+@Composable
+fun SignInScreen(
+    navigateToSignUp: () -> Unit,
+    navigateToHome: () -> Unit,
+    showSnackbar: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val viewModel: SignInViewModel = hiltViewModel()
 
@@ -157,5 +171,9 @@ fun SignInScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSignInScreen() {
-    SignInScreen()
+    SignInScreen(
+        navigateToSignUp = {},
+        navigateToHome = {},
+        showSnackbar = {}
+    )
 }

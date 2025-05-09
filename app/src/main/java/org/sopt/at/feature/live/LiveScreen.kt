@@ -7,6 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.sopt.at.ui.theme.TvingTheme
+
+@Composable
+fun LiveRoute(modifier: Modifier = Modifier) {
+    LiveScreen(
+        modifier = modifier
+    )
+}
 
 @Composable
 fun LiveScreen(modifier: Modifier = Modifier) {
@@ -14,7 +22,10 @@ fun LiveScreen(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("라이브 화면")
+        Text(
+            text = "라이브 화면",
+            color = TvingTheme.colors.BasicWhite
+        )
     }
 }
 

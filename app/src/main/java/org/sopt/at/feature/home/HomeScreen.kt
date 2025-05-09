@@ -20,17 +20,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import org.sopt.at.R
 import org.sopt.at.core.component.list.HomeList
 import org.sopt.at.core.component.list.HomeListCardItem
 import org.sopt.at.ui.theme.TvingTheme
+
+@Composable
+fun HomeRoute(modifier: Modifier = Modifier) {
+    HomeScreen(
+
+    )
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
