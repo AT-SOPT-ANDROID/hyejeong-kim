@@ -67,6 +67,7 @@ class MyViewModel @Inject constructor(
     private fun getMyNickname() {
         viewModelScope.launch {
             authPreferences.userId.collect { token ->
+                if (token == 0L) return@collect
                 repository.getMyNickname(token).collect { result ->
                     when (result) {
                         is BaseState.Error -> {}
