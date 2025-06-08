@@ -1,8 +1,8 @@
 package org.sopt.at.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.sopt.at.data.dao.SeriesDao
-import org.sopt.at.data.local.Series
+import org.sopt.at.data.local.dao.SeriesDao
+import org.sopt.at.data.local.entity.Series
 import javax.inject.Inject
 
 class SeriesRepositoryImpl @Inject constructor(

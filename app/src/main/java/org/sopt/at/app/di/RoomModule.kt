@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.sopt.at.data.TvingDatabase
-import org.sopt.at.data.dao.SeriesDao
+import org.sopt.at.data.local.dao.SeriesDao
 import javax.inject.Singleton
 
 @Module

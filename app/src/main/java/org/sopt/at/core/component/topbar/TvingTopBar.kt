@@ -14,15 +14,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.at.ui.theme.TvingTheme
 
 @Composable
 fun TvingTopBar(
-    modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
@@ -52,6 +51,6 @@ fun TvingTopBar(
 @Composable
 private fun PreviewTvingTopBar() {
     TvingTopBar(
-
+        onBackClick = {}
     )
 }

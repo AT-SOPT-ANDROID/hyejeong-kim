@@ -10,8 +10,10 @@
     <string name="button_find_id">아이디 찾기</string>
     <string name="button_find_pw">비밀번호 찾기</string>
     <string name="button_next">다음</string>
+    <string name="button_edit_nickname">닉네임 변경하기</string>
 
     <!-- TextField -->
+    <string name="textfield_nickname">닉네임</string>
     <string name="textfield_id">아이디</string>
     <string name="textfield_pw">비밀번호</string>
 
@@ -20,10 +22,13 @@
     <string name="sign_in_invalid">"회원 정보가 유효하지 않습니다."</string>
     
     <!-- SignUp-->
+    <string name="sign_up_nickname_input">닉네임을 입력해주세요.</string>
+    <string name="sign_up_nickname_condition">한글/영어/숫자 조합 1~20자</string>
     <string name="sign_up_id_input">아이디를 입력해주세요.</string>
-    <string name="sign_up_id_condition">영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리</string>
+    <string name="sign_up_id_condition">대문자/소문자/숫자 조합 8~20 자리</string>
     <string name="sign_up_pw_input">비밀번호를 입력해주세요.</string>
-    <string name="sign_up_pw_condition">영문, 숫자, 특수문자(~!@#$%^) 조합 8~15자리</string>
+    <string name="sign_up_pw_condition">대문자/소문자/숫자 조합 8~20 자리</string>
+    <string name="sign_up_invalid_nickname">닉네임이 유효하지 않습니다.</string>
     <string name="sign_up_invalid_id">ID가 유효하지 않습니다.</string>
     <string name="sign_up_invalid_pw">비밀번호가 유효하지 않습니다.</string>"
     
@@ -34,6 +39,12 @@
     <string name="home_today_20">오늘의 티빙 TOP 20</string>
     <string name="home_now">지금 방영 중인 콘텐츠</string>
     <string name="home_more">더보기</string>
+
+    <!-- Search -->
+    <string name="search_keyword_input">검색어를 입력해주세요.</string>
+
+    <!-- EditNickname -->
+    <string name="edit_nickname_input">변경할 닉네임을 입력해주세요.</string>
 
     <!-- History -->
     <string name="history_series_list">찜한 목록</string>

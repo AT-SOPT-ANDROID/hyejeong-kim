@@ -16,6 +16,11 @@ ksp = "2.0.0-1.0.24"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 kotlinx-collections-immutable = "0.3.7"
+okhttp = "4.12.0"
+retrofit = "2.11.0"
+retrofit-kotlinx-serialization-json = "1.0.0"
+gson = "2.10.1"
+androidx-datastore = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +50,14 @@ accompanist-systemuicontroller = { group = "com.google.accompanist", name = "acc
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidx-datastore" }
+datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidx-datastore" }
+
+# Network
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlinx-serialization-json" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
